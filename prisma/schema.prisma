@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Usuarios {
+  id String @id @default(uuid())
+  nome String 
+  email String
+  senha String
+  created_At DateTime? @default(now())
+  update_At DateTime @default(now())
+
+  @@map("usuarios")
+}
+
+model Categorias {
+  id String @id @default(uuid())
+  nome String
+  create_At DateTime? @default(now())
+  update_At DateTime @default(now())
+
+  eventos Eventos[]
+ @@map("categorias")
+}
+
+model Cidades {
+  id String @id @default(uuid())
+  nomeCidade String
+  uf String?
+  bannerCidade String?
+  logoCidade String?
+  create_At DateTime? @default(now())
+  update_At DateTime @default(now())
+
+
+  eventos Eventos[]
+  @@map("cidades")
+}
+model Eventos {
+  id String @id @default(uuid())
+  nome String 
+  descricao String
+  nomeLocalEvento String
+  urlLocalizacaoEvento String
+  urlIntagramDoComerciante String?
+  bannerEvento String
+  dataEvento String
+  horarioEvento String
+  locaisCompraIngresso String[]
+
+  categorias Categorias @relation(fields: [categorias_id],references: [id])
+  cidades Cidades @relation(fields: [cidades_id], references: [id])
+  categorias_id String
+  cidades_id String 
+
+
+ @@map("eventos")
+}
+
+
+
+
+
+
