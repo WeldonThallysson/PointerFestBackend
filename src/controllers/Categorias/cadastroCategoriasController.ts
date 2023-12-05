@@ -4,10 +4,10 @@ import { CadastroCategoriasService } from "../../services/Categorias/cadastroCat
 
 class CadastroCategoriasController {
      async handle(req: Request, res: Response){
-            const {nomeCategoria} = req.body
+            const {nome} = req.body
 
             const cadastroCategoria = new CadastroCategoriasService()
-            const cadastro = await cadastroCategoria.execute({nomeCategoria})
+            const cadastro = await cadastroCategoria.execute({nome})
 
             return res.json(cadastro)
      }

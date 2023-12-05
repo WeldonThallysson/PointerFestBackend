@@ -1,20 +1,20 @@
 
 {  
-    "regions": ["sfo1"],
-   
+
     "version": 2,
     "builds": [
         {
-            "src": "./dist/server.js",
-            "use": "@now/node"
+            "src": "src/server.ts",
+            "use": "@vercel/node"
+            
 
         }
+    
     ],
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "./dist/server.js"
+            "src": "(.*)",
+            "dest": "src/server.ts"
         }
-    
     ]
   }

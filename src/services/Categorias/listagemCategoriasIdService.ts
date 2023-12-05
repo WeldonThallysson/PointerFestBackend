@@ -15,6 +15,9 @@ class ListagemCategoriasIdService {
             }
         })
 
+        return listagemCategorias
        
     }
 }
+
+export {ListagemCategoriasIdService}

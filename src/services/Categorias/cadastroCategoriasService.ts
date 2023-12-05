@@ -2,20 +2,19 @@ import prismaClient from "../../prisma";
 
 
 interface CadastroCategoriaType {
-    nomeCategoria: string
+    nome: string
 }
 
 class CadastroCategoriasService {
-    async execute({nomeCategoria}: CadastroCategoriaType){
+    async execute({nome}: CadastroCategoriaType){
+           
+     
         const cadastroCategoria = await prismaClient.categorias.create({
             data:{
-                nome: nomeCategoria,
+                nome: nome,
             }
         })
-     
-        if(nomeCategoria === cadastroCategoria.nome){
-            throw new Error("Não é permitido cadastrar categorias com o mesmo nome")
-        }
+      
         return cadastroCategoria;
     }
 }

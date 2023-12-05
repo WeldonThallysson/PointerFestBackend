@@ -51,12 +51,12 @@ model Eventos {
   descricao String
   nomeLocalEvento String
   urlLocalizacaoEvento String
-  urlIntagramDoComerciante String?
+  urlInstagramDoComerciante String?
   bannerEvento String
   dataEvento String
   horarioEvento String
   locaisCompraIngresso String[]
-
+  telefone String
   categorias Categorias @relation(fields: [categorias_id],references: [id])
   cidades Cidades @relation(fields: [cidades_id], references: [id])
   categorias_id String

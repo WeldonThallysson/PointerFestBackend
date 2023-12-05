@@ -3,11 +3,11 @@ import prismaClient from "../../prisma";
 
 interface EditarCategoriasType {
     id: string,
-    nomeCategoria: string
+    nome: string
 }
 
 class EditarCategoriasService {
-    async execute({id,nomeCategoria}: EditarCategoriasType){
+    async execute({id,nome}: EditarCategoriasType){
         
         
         const editarCategoria = await prismaClient.categorias.update({
@@ -15,16 +15,12 @@ class EditarCategoriasService {
                 id: id
             },
             data: {
-                nome: nomeCategoria
+                nome: nome
             }
 
         })
 
-        if(nomeCategoria === editarCategoria.nome){
-            throw new Error("Edite para outro nome,essa categoria já existe !")
-        }
-
-        if(nomeCategoria === ""){
+        if(nome === ""){
             throw new Error("envie valores para a atualização")
         }
 
