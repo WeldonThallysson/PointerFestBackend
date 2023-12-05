@@ -26,6 +26,9 @@ const router = Router()
 
 const upload = multer(uploadConfig.upload("./tmp")) 
 //rotas para criar um cadastro, login e detalhes do usuario
+router.get("/", (req: Request, res: Response) => {
+     return res.json({tudook: "tudo ok"})
+})
 router.post('/cadastro', new CadastroUsuarioController().handle)
 router.post("/login", new LoginUsuarioController().handle)
 router.get("/detalhesUsuario", isLogged, new DetalhesUsuarioController().handle)
@@ -33,7 +36,7 @@ router.delete("/deletarUsuario/:id", isLogged, new DeletarUsuariosController().h
 
 // rotas para as cidades
 router.post("/cidades", isLogged, new CadastroCidadesController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.get("/cidades", new ListagemTodasCidadesController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario)
+router.get("/cidades", isLogged, new ListagemTodasCidadesController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario)
 router.get("/cidades/:id", isLogged, new ListagemCidadesIdController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
 router.put("/cidades", isLogged, new EditarCidadesController().handle); // essa rota vai ser chamada no Aplicativo front end( admin )
 router.delete("/cidades/:id", isLogged, new DeletarCidadesIdController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
