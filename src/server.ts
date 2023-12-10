@@ -27,7 +27,10 @@ app.use(router)
 app.use("/files",
   express.static(path.resolve(__dirname,"..","tmp"))
 )
-app.listen(3333,( ) => {
+app.listen({ 
+    host: '0.0.0.0',
+    port: 3333
+   },( ) => {
    console.log("servidor online")
 })
 
