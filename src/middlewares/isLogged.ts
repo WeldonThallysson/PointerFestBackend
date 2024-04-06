@@ -1,5 +1,6 @@
 import { Request,Response,NextFunction } from "express";
 import { verify } from "jsonwebtoken";
+
 interface verificacaoToken {
     sub: string
 }

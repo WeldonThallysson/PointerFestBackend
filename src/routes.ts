@@ -26,9 +26,6 @@ const router = Router()
 
 const upload = multer(uploadConfig.upload("./tmp")) 
 //rotas para criar um cadastro, login e detalhes do usuario
-router.get("/teste", (req: Request, res: Response) => {
-     return res.json({tudook: "tudo ok"})
-})
 router.post('/cadastro', new CadastroUsuarioController().handle)
 router.post("/login", new LoginUsuarioController().handle)
 router.get("/detalhesUsuario", isLogged, new DetalhesUsuarioController().handle)
