@@ -23,7 +23,7 @@
   "scripts": {
     "dev": "ts-node-dev ./src/server.ts",
     "build": "tsup src",
-    "start": "pm2 start dist/server.js",
+    "start": "pm2 start ./dist/server.js",
     "run-build": "npx prisma migrate deploy"
   },
   "devDependencies": {
