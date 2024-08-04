@@ -4,10 +4,12 @@ import prismaClient from "../../prisma";
 interface EditarCategoriasType {
     id: string,
     nome: string
+    iconeCategoria: string
+    urlBannerCategoria: string
 }
 
 class EditarCategoriasService {
-    async execute({id,nome}: EditarCategoriasType){
+    async execute({id,nome,iconeCategoria,urlBannerCategoria}: EditarCategoriasType){
         
         
         const editarCategoria = await prismaClient.categorias.update({
@@ -15,7 +17,10 @@ class EditarCategoriasService {
                 id: id
             },
             data: {
-                nome: nome
+                nome: nome,
+                iconeCategoria: iconeCategoria,
+                urlBannerCategoria: urlBannerCategoria,
+
             }
 
         })

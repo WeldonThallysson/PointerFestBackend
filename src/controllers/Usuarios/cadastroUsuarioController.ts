@@ -2,7 +2,6 @@ import { Request,Response } from "express";
 import { CadastroUsuarioService } from "../../services/Usuarios/cadastroUsuarioService";
 
 class CadastroUsuarioController {
-    
     async handle(req:Request,res:Response){
 
         const {nome,email,senha} = req.body;

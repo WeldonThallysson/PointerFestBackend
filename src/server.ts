@@ -4,9 +4,8 @@ import "express-async-errors"
 import cors from 'cors'
 import path from 'path'
 const app = express()
+
 app.use(cors())
-
-
 app.use(express.json())
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -32,6 +31,7 @@ app.listen({
     port: 3333
    },( ) => {
    console.log("servidor online")
+   console.log("localhost:3333")
 })
 
 

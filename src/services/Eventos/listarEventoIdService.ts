@@ -12,7 +12,7 @@ class ListarEventoIdService {
             },
             include: { 
                categorias: true,
-               cidades: true
+         
            }
 
         })

@@ -12,11 +12,13 @@ class CadastrarEventoController {
             urlLocalizacaoEvento,
             dataEvento,
             horarioEvento,
-            categorias_id,
-            cidades_id,
+            categoria_id,
             locaisCompraIngresso,
             urlInstagramDoComerciante,
             telefone,
+           restricoesEvento,
+           tipoVisibilidadeEvento,
+           statusEvento,
         } = req.body;
 
         const cadastrarEvento = new CadastrarEventoService()
@@ -35,12 +37,15 @@ class CadastrarEventoController {
                 bannerEvento,
                 dataEvento,
                 horarioEvento,
-                categorias_id,
-                cidades_id,
+                categoria_id,
                 locaisCompraIngresso,
                 urlInstagramDoComerciante,
                 telefone,
+                restricoesEvento,
+                tipoVisibilidadeEvento,
+                statusEvento,
              })
+             
             return res.json(eventoCadastrado)
 
         }

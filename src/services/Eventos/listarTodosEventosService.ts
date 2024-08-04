@@ -5,7 +5,6 @@ class ListarTodosEventosService {
         const listarTodosEventos = await prismaClient.eventos.findMany({
             include: { 
                 categorias: true,
-                cidades: true
             }
  
         })

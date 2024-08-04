@@ -3,11 +3,9 @@ import { DetalhesUsuarioServices } from "../../services/Usuarios/detalhesUsuario
 
 
 class DetalhesUsuarioController {
-   
     async handle(req:Request,res:Response){
 
          const usuario_id = req.usuario_id;
-
 
          const detalhesUsuario = new DetalhesUsuarioServices();
 

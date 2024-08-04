@@ -9,11 +9,13 @@ interface EditarEventoServiceType {
   bannerEvento: string;
   dataEvento: string;
   horarioEvento: string;
-  categorias_id: string;
-  cidades_id: string;
+  categoria_id: string;
   locaisCompraIngresso?: string[];
   urlInstagramDoComerciante?: string;
+  restricoesEvento?: string;
   telefone?: string;
+  tipoVisibilidadeEvento: string
+  statusEvento: boolean
 }
 
 class EditarEventosService {
@@ -26,11 +28,13 @@ class EditarEventosService {
     bannerEvento,
     dataEvento,
     horarioEvento,
-    categorias_id,
-    cidades_id,
+    categoria_id,
     locaisCompraIngresso,
     urlInstagramDoComerciante,
     telefone,
+    tipoVisibilidadeEvento,
+    restricoesEvento,
+    statusEvento,
   }: EditarEventoServiceType) {
     const editar = await prismaClient.eventos.update({
       where: {
@@ -39,16 +43,18 @@ class EditarEventosService {
       data: {
         nome: nome,
         descricao: descricao,
+        tipoVisibilidadeEvento: tipoVisibilidadeEvento,
         nomeLocalEvento: nomeLocalEvento,
         urlLocalizacaoEvento: urlLocalizacaoEvento,
         bannerEvento: bannerEvento,
         dataEvento: dataEvento,
         horarioEvento: horarioEvento,
-        categorias_id: categorias_id,
-        cidades_id: cidades_id,
+        categoria_id: categoria_id,
+        restricoesEvento: restricoesEvento,
         locaisCompraIngresso: locaisCompraIngresso,
-        urlInstagramDoComerciante: urlInstagramDoComerciante,
+        urlPostRedeSocial: urlInstagramDoComerciante,
         telefone: telefone,
+        statusEvento: statusEvento,
       },
     });
     return editar;

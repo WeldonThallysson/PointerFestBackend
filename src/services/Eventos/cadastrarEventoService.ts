@@ -8,12 +8,13 @@ interface CadastrarEventoType {
    bannerEvento: string;
    dataEvento: string;
    horarioEvento: string;
-   categorias_id: string;
-   cidades_id: string;
+   categoria_id: string;
    locaisCompraIngresso?: string[];
    urlInstagramDoComerciante?: string;
+   restricoesEvento?: string;
    telefone?: string;
-
+   tipoVisibilidadeEvento: string
+   statusEvento: boolean
 }
 
 class CadastrarEventoService {
@@ -21,32 +22,36 @@ class CadastrarEventoService {
         nome,
         descricao,
         nomeLocalEvento,
+        tipoVisibilidadeEvento,
         urlLocalizacaoEvento,
         bannerEvento,
         dataEvento,
         horarioEvento,
-        categorias_id,
-        cidades_id,
+        categoria_id,
+        restricoesEvento,
         locaisCompraIngresso,
         urlInstagramDoComerciante,
         telefone,
+        statusEvento,
+ 
     }: CadastrarEventoType){
        
         const cadastrarEvento = await prismaClient.eventos.create({
-
             data:{
                 nome: nome,
                 descricao: descricao,
+                tipoVisibilidadeEvento: tipoVisibilidadeEvento,
                 nomeLocalEvento: nomeLocalEvento,
                 urlLocalizacaoEvento: urlLocalizacaoEvento,
                 bannerEvento: bannerEvento,
                 dataEvento: dataEvento,
                 horarioEvento: horarioEvento,
-                categorias_id: categorias_id,
-                cidades_id: cidades_id,
+                categoria_id: categoria_id,
+                restricoesEvento: restricoesEvento,
                 locaisCompraIngresso: locaisCompraIngresso,
-                urlInstagramDoComerciante: urlInstagramDoComerciante,
+                urlPostRedeSocial: urlInstagramDoComerciante,
                 telefone: telefone,
+                statusEvento: statusEvento,
             }
         })
         return cadastrarEvento;   

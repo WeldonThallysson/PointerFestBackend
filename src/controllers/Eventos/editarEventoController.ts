@@ -12,11 +12,13 @@ class EditarEventoController {
             urlLocalizacaoEvento,
             dataEvento,
             horarioEvento,
-            categorias_id,
-            cidades_id,
+            categoria_id,
             locaisCompraIngresso,
             urlInstagramDoComerciante,
             telefone,
+           restricoesEvento,
+           tipoVisibilidadeEvento,
+           statusEvento,
         } = req.body;
        
         const {originalname, filename: bannerEvento} = req.file
@@ -30,8 +32,10 @@ class EditarEventoController {
             urlLocalizacaoEvento,
             dataEvento,
             horarioEvento,
-            categorias_id,
-            cidades_id,
+            categoria_id,
+            restricoesEvento,
+            tipoVisibilidadeEvento,
+            statusEvento,
             locaisCompraIngresso,
             urlInstagramDoComerciante,
             telefone,
