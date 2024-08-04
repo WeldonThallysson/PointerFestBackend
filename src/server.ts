@@ -28,7 +28,7 @@ app.use("/files",
 )
 app.listen({ 
     host: '0.0.0.0',
-    port: 3333
+    port: process.env.PORT ? Number(process.env.PORT) : 3333
    },( ) => {
    console.log("servidor online")
    console.log("localhost:3333")
