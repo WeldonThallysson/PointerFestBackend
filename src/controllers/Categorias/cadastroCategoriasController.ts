@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { CadastroCategoriasService } from "../../services/Categorias/cadastroCategoriasService";
 
+interface IResponseCadastroCategoria {
+  status?: number
+  message?: string
+}
 class CadastroCategoriasController {
   async handle(req: Request, res: Response) {
     const { nome } = req.body;
@@ -14,9 +18,15 @@ class CadastroCategoriasController {
       nome,
       iconeCategoria,
       urlBannerCategoria,
-    });
+    }) as IResponseCadastroCategoria;
 
-    return res.json(cadastro);
+      if(cadastro.status === 403){
+        return res.status(403).json(cadastro)
+      }
+  
+      res.json(cadastro);
+
+ 
   }
 }
 

@@ -1,6 +1,9 @@
 import { Request,Response } from "express";
 import { CadastrarEventoService } from "../../services/Eventos/cadastrarEventoService";
-
+interface IResponseCadastrarEventoController {
+    status?: number
+    message?: string
+  }
 
 
 class CadastrarEventoController {
@@ -44,8 +47,11 @@ class CadastrarEventoController {
                 restricoesEvento,
                 tipoVisibilidadeEvento,
                 statusEvento,
-             })
+             }) as IResponseCadastrarEventoController
              
+             if(eventoCadastrado.status === 403){
+                return res.status(403).json(eventoCadastrado)
+            }
             return res.json(eventoCadastrado)
 
         }

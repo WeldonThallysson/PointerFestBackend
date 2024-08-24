@@ -4,8 +4,8 @@ import prismaClient from "../../prisma";
 interface EditarCategoriasType {
     id: string,
     nome: string
-    iconeCategoria: string
-    urlBannerCategoria: string
+    iconeCategoria?: string | null
+    urlBannerCategoria?: string | null
 }
 
 class EditarCategoriasService {
@@ -16,11 +16,12 @@ class EditarCategoriasService {
             where: {
                 id: id
             },
-            data: {
+            
+            data:{
                 nome: nome,
-                iconeCategoria: iconeCategoria,
-                urlBannerCategoria: urlBannerCategoria,
-
+                ...(iconeCategoria && { iconeCategoria: iconeCategoria }),
+                ...(urlBannerCategoria && {urlBannerCategoria: urlBannerCategoria})
+            
             }
 
         })
