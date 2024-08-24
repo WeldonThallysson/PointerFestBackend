@@ -51,7 +51,8 @@ class CadastrarEventoController {
              
              if(eventoCadastrado.status === 403){
                 return res.status(403).json(eventoCadastrado)
-            }
+             }
+
             return res.json(eventoCadastrado)
 
         }
