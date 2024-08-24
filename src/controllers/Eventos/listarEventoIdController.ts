@@ -7,7 +7,6 @@ class ListarEventoIdController {
         
         const listarEventoId = new ListarEventoIdService();
         const listarEvento = await listarEventoId.execute({id});
-
         return res.json(listarEvento)
      }
 

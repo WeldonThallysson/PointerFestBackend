@@ -13,7 +13,11 @@ class DeletarEventoService {
                 id: id
             }
         })    
-        return deletarEvento
+        return {
+            message: `Evento deletado com sucesso`,
+            evento: deletarEvento.id,
+            status: 200
+        }
     }
 }
 

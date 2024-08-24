@@ -51,7 +51,7 @@ class CadastrarEventoService {
                 locaisCompraIngresso: locaisCompraIngresso,
                 urlPostRedeSocial: urlInstagramDoComerciante,
                 telefone: telefone,
-                statusEvento: statusEvento,
+                statusEvento: Boolean(statusEvento),
             }
         })
         return cadastrarEvento;   

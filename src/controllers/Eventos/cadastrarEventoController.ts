@@ -27,7 +27,7 @@ class CadastrarEventoController {
             throw new Error("error upload file")
         } else{
 
-            const {originalname,filename: bannerEvento} = req.file
+            const {originalname, filename: bannerEvento} = req.file
             
             const eventoCadastrado = await cadastrarEvento.execute({ 
                 nome,

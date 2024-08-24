@@ -1,20 +1,19 @@
 import prismaClient from "../../prisma";
 
 interface listarEventosIdType {
-    id: string
+    id: string;
+   
 }
 
 class ListarEventoIdService {
     async execute({id}: listarEventosIdType){
         const listarEventoId = await prismaClient.eventos.findFirst({
             where: {
-                id: id
+                id: id,
             },
             include: { 
                categorias: true,
-         
            }
-
         })
 
         return listarEventoId
