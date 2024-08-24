@@ -3,8 +3,8 @@ import prismaClient from "../../prisma";
 
 interface CadastroCategoriaType {
     nome: string
-    iconeCategoria: string
-    urlBannerCategoria: string
+    iconeCategoria?: string | null
+    urlBannerCategoria?: string | null
 }
 
 class CadastroCategoriasService {
@@ -14,8 +14,9 @@ class CadastroCategoriasService {
         const cadastroCategoria = await prismaClient.categorias.create({
             data:{
                 nome: nome,
-                iconeCategoria: iconeCategoria,
-                urlBannerCategoria: urlBannerCategoria
+                ...(iconeCategoria && {ìconeCategoria: iconeCategoria}),
+                ...(urlBannerCategoria && {urlBannerCategoria: urlBannerCategoria})
+            
             }
         })
       
