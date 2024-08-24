@@ -14,7 +14,7 @@ class CadastroCategoriasService {
         const cadastroCategoria = await prismaClient.categorias.create({
             data:{
                 nome: nome,
-                ...(iconeCategoria && {ìconeCategoria: iconeCategoria}),
+                ...(iconeCategoria && { iconeCategoria: iconeCategoria }),
                 ...(urlBannerCategoria && {urlBannerCategoria: urlBannerCategoria})
             
             }
