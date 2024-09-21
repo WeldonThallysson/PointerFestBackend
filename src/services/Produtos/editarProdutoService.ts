@@ -4,9 +4,11 @@ interface IEditarProduto {
     idProduto: string
     nome: string
     descricao: string
+    preco: number,
+    status: boolean
 }
 class EditarProdutosService {
-    async execute({idProduto, nome, descricao}: IEditarProduto){
+    async execute({idProduto, nome, descricao,preco,status}: IEditarProduto){
 
         const produtoEditado = await prismaClient.produtos.update({
             where: {
@@ -14,11 +16,17 @@ class EditarProdutosService {
             },
             data: {
                 nome: nome,
-                descricao: descricao
+                descricao: descricao,
+                preco: preco,
+                status: status
             }
         })
 
-        return produtoEditado
+        return {
+            status: 200,
+            message: "Alteração realizada com sucesso",
+            idProduto: produtoEditado.id
+        }
     }
 }
 

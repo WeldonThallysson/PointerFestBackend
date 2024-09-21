@@ -46,6 +46,8 @@ model Produtos {
   id String @id @default(uuid())
   nome String 
   descricao String  
+  preco Float
+  status Boolean? @default(true)
   eventos Eventos[]
   create_At DateTime? @default(now())
  @@map("produtos")  

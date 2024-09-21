@@ -1,20 +1,20 @@
 import prismaClient from "../../prisma";
 
 interface IDeletarProdutosService {
-    idProduto: string 
+    id: string 
 }
 class DeletarProdutosService {
-    async execute({idProduto}:IDeletarProdutosService){
+    async execute({id}:IDeletarProdutosService){
         const produtoDeletado = await prismaClient.produtos.delete({
             where: {
-                id: idProduto
+                id: id
             }
         })
 
         return {
             status: 200,
-            produto: produtoDeletado.id,
-            message: "Produto deletado com sucesso"
+            idProduto: produtoDeletado.id,
+            message: "Exclusão realizada com sucesso"
 
         }
     }

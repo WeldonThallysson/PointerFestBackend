@@ -28,7 +28,7 @@ class CadastrarEventoController {
             urlInstagramDoComerciante,
             telefone,
            restricoesEvento,
-           tipoVisibilidadeEvento,
+           produto_id,
            statusEvento,
         } = req.body;
 
@@ -62,7 +62,7 @@ class CadastrarEventoController {
                 urlInstagramDoComerciante,
                 telefone,
                 restricoesEvento,
-                tipoVisibilidadeEvento,
+                produto_id,
                 statusEvento,
              }) as IResponseCadastrarEventoController
              

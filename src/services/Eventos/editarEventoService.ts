@@ -14,7 +14,7 @@ interface EditarEventoServiceType {
   urlInstagramDoComerciante?: string;
   restricoesEvento?: string;
   telefone?: string;
-  tipoVisibilidadeEvento: string
+  produto_id: string
   statusEvento: boolean
 }
 
@@ -32,7 +32,7 @@ class EditarEventosService {
     locaisCompraIngresso,
     urlInstagramDoComerciante,
     telefone,
-    tipoVisibilidadeEvento,
+    produto_id,
     restricoesEvento,
     statusEvento,
   }: EditarEventoServiceType) {
@@ -44,7 +44,7 @@ class EditarEventosService {
       data: {
       nome: nome,
       descricao: descricao,
-      tipoVisibilidadeEvento: tipoVisibilidadeEvento,
+      produto_id: produto_id,
       nomeLocalEvento: nomeLocalEvento,
       urlLocalizacaoEvento: urlLocalizacaoEvento,
       bannerEvento: bannerEvento,

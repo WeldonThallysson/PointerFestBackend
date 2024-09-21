@@ -16,7 +16,7 @@ class EditarEventoController {
       urlInstagramDoComerciante,
       telefone,
       restricoesEvento,
-      tipoVisibilidadeEvento,
+      produto_id,
       statusEvento,
     } = req.body;
 
@@ -33,7 +33,7 @@ class EditarEventoController {
       horarioEvento,
       categoria_id,
       restricoesEvento,
-      tipoVisibilidadeEvento,
+      produto_id,
       statusEvento,
       locaisCompraIngresso,
       urlInstagramDoComerciante,

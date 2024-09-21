@@ -13,7 +13,7 @@ interface CadastrarEventoType {
    urlInstagramDoComerciante?: string;
    restricoesEvento?: string;
    telefone?: string;
-   tipoVisibilidadeEvento: string
+   produto_id: string
    statusEvento: boolean
 }
 
@@ -22,7 +22,7 @@ class CadastrarEventoService {
         nome,
         descricao,
         nomeLocalEvento,
-        tipoVisibilidadeEvento,
+        produto_id,
         urlLocalizacaoEvento,
         bannerEvento,
         dataEvento,
@@ -50,7 +50,7 @@ class CadastrarEventoService {
             data:{
                 nome: nome,
                 descricao: descricao,
-                produto_id: tipoVisibilidadeEvento,
+                produto_id: produto_id,
                 nomeLocalEvento: nomeLocalEvento,
                 urlLocalizacaoEvento: urlLocalizacaoEvento,
                 bannerEvento: bannerEvento,

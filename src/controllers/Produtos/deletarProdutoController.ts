@@ -13,7 +13,7 @@ class DeletarProdutosController {
     }
 
     const deletarProdutos = new DeletarProdutosService();
-    const produto = await deletarProdutos.execute({ idProduto: id });
+    const produto = await deletarProdutos.execute({ id });
 
     return res.status(200).json(produto);
   }

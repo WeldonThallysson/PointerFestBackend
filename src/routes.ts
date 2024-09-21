@@ -24,10 +24,11 @@ import { DeletarEventoController } from "./controllers/Eventos/deletarEventoCont
 import { EditarUsuarioController } from "./controllers/Usuarios/editarUsuarioController";
 import { ListarUsuariosController } from "./controllers/Usuarios/listarUsuariosController";
 import { CadastroProdutoController } from "./controllers/Produtos/cadastroProdutosController";
-import { EditarProdutosController } from "./controllers/Produtos/EditarProdutosController";
+
 import { ListarProdutosController } from "./controllers/Produtos/listarProdutosController";
 import { DeletarProdutosController } from "./controllers/Produtos/deletarProdutoController";
 import { ListarDetalhesProdutosController } from "./controllers/Produtos/listarDetalhesProdutosController";
+import { EditarProdutosController } from "./controllers/Produtos/editarProdutosController";
 
 const router = Router()
 
