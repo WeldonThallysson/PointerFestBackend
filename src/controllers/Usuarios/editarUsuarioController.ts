@@ -18,8 +18,8 @@ class EditarUsuarioController {
             urlRedeSocial,
         } = req.body
         
-        const files = req.files as {[filename: string]: Express.Multer.File[]}
-        const urlLogoUsuario = files['urlLogoUsuario']?.[0].filename;
+        //const files = req.files as {[filename: string]: Express.Multer.File[]}
+        //const urlLogoUsuario = files['urlLogoUsuario']?.[0].filename;
 
         const editarUsuario = new EditarUsuarioService()
        
@@ -41,7 +41,7 @@ class EditarUsuarioController {
             endereco,
             telefone,
             urlRedeSocial,
-            urlLogoUsuario,
+            //urlLogoUsuario,
             
         })
 

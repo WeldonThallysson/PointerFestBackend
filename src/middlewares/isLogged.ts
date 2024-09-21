@@ -5,7 +5,7 @@ interface verificacaoToken {
     sub: string
 }
 
-export function isLogged(req:Request,res:Response,next:NextFunction){
+export function isLogged(req:Request, res:Response, next:NextFunction){
     
 
     const loggedToken = req.headers.authorization;

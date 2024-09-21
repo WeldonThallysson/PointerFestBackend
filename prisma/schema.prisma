@@ -24,22 +24,12 @@ model Usuarios {
   urlRedeSocial String?
   urlLogoUsuario String?
   statusUsuario Boolean @default(true)
-  
   created_At DateTime? @default(now())
   update_At DateTime @default(now())
   @@map("usuarios")
 }
 
-model Categorias {
-  id String @id @default(uuid())
-  nome String
-  iconeCategoria String?
-  urlBannerCategoria String?
-  create_At DateTime? @default(now())
-  update_At DateTime @default(now())
-  eventos Eventos[]
- @@map("categorias")
-}
+
 
 model Cidades {
   id String @id @default(uuid())
@@ -52,11 +42,19 @@ model Cidades {
   @@map("cidades")
 }
 
+model Produtos {
+  id String @id @default(uuid())
+  nome String 
+  descricao String  
+  eventos Eventos[]
+  create_At DateTime? @default(now())
+ @@map("produtos")  
+}
+
 model Eventos {
   id String @id @default(uuid())
   nome String 
   descricao String
-  tipoVisibilidadeEvento String
   nomeLocalEvento String
   urlLocalizacaoEvento String
   urlPostRedeSocial String?
@@ -69,15 +67,29 @@ model Eventos {
   categorias Categorias @relation(fields: [categoria_id],references: [id])
   categoria_id String
   statusEvento Boolean @default(true)
+  produtos Produtos @relation(fields: [produto_id], references: [id])
+  produto_id String
+
   lixeiraEventos Lixeira[]
  @@map("eventos")
+}
+
+
+model Categorias {
+  id String @id @default(uuid())
+  nome String
+  iconeCategoria String?
+  urlBannerCategoria String?
+  create_At DateTime? @default(now())
+  update_At DateTime @default(now())
+  eventos Eventos[]
+ @@map("categorias")
 }
 
 model Lixeira {
   id String @id @default(uuid())
   eventos Eventos @relation(fields: [evento_id], references: [id])
   evento_id String
-
  @@map("lixeira")
 }
 

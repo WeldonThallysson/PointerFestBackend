@@ -23,6 +23,11 @@ import { EditarEventoController } from "./controllers/Eventos/editarEventoContro
 import { DeletarEventoController } from "./controllers/Eventos/deletarEventoController";
 import { EditarUsuarioController } from "./controllers/Usuarios/editarUsuarioController";
 import { ListarUsuariosController } from "./controllers/Usuarios/listarUsuariosController";
+import { CadastroProdutoController } from "./controllers/Produtos/cadastroProdutosController";
+import { EditarProdutosController } from "./controllers/Produtos/EditarProdutosController";
+import { ListarProdutosController } from "./controllers/Produtos/listarProdutosController";
+import { DeletarProdutosController } from "./controllers/Produtos/deletarProdutoController";
+import { ListarDetalhesProdutosController } from "./controllers/Produtos/listarDetalhesProdutosController";
 
 const router = Router()
 
@@ -60,11 +65,18 @@ router.delete("/categorias/:id", isLogged, new DeletarCategoriaController().hand
 
 // rotas para cadastrar Eventos
 
-router.post("/eventos", isLogged, upload.single('bannerEvento'), new CadastrarEventoController().handle)   // essa rota vai ser chamada no Aplicativo front end( usuario )
+router.post("/eventos", isLogged, new CadastrarEventoController().handle)   // essa rota vai ser chamada no Aplicativo front end( usuario )
 router.get("/eventos", isLogged, new ListarTodosEventosController().handle)   // essa rota vai ser chamada no Aplicativo front end( usuario)
 router.get("/eventos/:id", isLogged, new ListarEventoIdController().handle)   // essa rota vai ser chamada no Aplicativo front end( usuario)
 router.put("/eventos", isLogged, upload.single('bannerEvento'), new EditarEventoController().handle)   // essa rota vai ser chamada no Aplicativo front end( usuario)
 router.delete("/eventos/:id", isLogged,new DeletarEventoController().handle)   // essa rota vai ser chamada no Aplicativo front end( usuario)
 
+
+// rotas para cadastrar os produtos da Up Point 
+router.post("/produtos", isLogged, new CadastroProdutoController().handle)
+router.put("/produtos", isLogged, new EditarProdutosController().handle)
+router.get("/produtos", isLogged, new ListarProdutosController().handle)
+router.get("/produtos/:id", isLogged, new ListarDetalhesProdutosController().handle)
+router.delete("/produtos/:id", isLogged, new DeletarProdutosController().handle)
 
 export {router}

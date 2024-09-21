@@ -43,14 +43,14 @@ class CadastrarEventoService {
         if(eventoExiste){
             return {
                 message: "Essa evento já existe",
-                status: 403
+                status: 400
             }
         }
         const cadastrarEvento = await prismaClient.eventos.create({
             data:{
                 nome: nome,
                 descricao: descricao,
-                tipoVisibilidadeEvento: tipoVisibilidadeEvento,
+                produto_id: tipoVisibilidadeEvento,
                 nomeLocalEvento: nomeLocalEvento,
                 urlLocalizacaoEvento: urlLocalizacaoEvento,
                 bannerEvento: bannerEvento,
