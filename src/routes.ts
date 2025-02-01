@@ -1,34 +1,33 @@
-import {Router,Request,Response} from "express";
-import { CadastroUsuarioController } from "./controllers/Usuarios/cadastroUsuarioController";
-import { LoginUsuarioController } from "./controllers/Usuarios/loginUsuarioController";
-import { DetalhesUsuarioController } from "./controllers/Usuarios/detalhesUsuariosController";
-import { CadastroCidadesController } from "./controllers/Cidades/cadastroCidadesController";
-import { ListagemTodasCidadesController } from "./controllers/Cidades/listagemTodasCidadesController";
-import { ListagemCidadesIdController } from "./controllers/Cidades/listagemCidadesIdController";
-import { DeletarCidadesIdController } from "./controllers/Cidades/deletarCidadesIdController";
+import { Router,Request,Response } from "express";
+
+import { UsersRegisterController } from "./controllers/Users/Auth/usersRegisterController";  
+import { UsersLoginController } from "./controllers/Users/Auth/usersLoginController"; 
+
+import { UsersDetailsController } from "./controllers/Users/usersDetailsController";
+ 
 import { isLogged } from "./middlewares/isLogged";
-import { DeletarUsuariosController } from "./controllers/Usuarios/deletarUsuarioServiceController";
-import { CadastroCategoriasController } from "./controllers/Categorias/cadastroCategoriasController";
-import { ListagemTodasCategoriasController } from "./controllers/Categorias/listagemTodasCategoriasController";
-import { ListagemCategoriasIdController } from "./controllers/Categorias/listagemCategoriasIdController";
-import { EditarCategoriasController } from "./controllers/Categorias/editarCategoriasController";
-import { DeletarCategoriaController } from "./controllers/Categorias/deletarCategoriasIdController";
-import { EditarCidadesController } from "./controllers/Cidades/editarCidadesController";
-import { CadastrarEventoController } from "./controllers/Eventos/cadastrarEventoController";
-import { ListarTodosEventosController } from "./controllers/Eventos/listarTodosEventosController";
-import { ListarEventoIdController } from "./controllers/Eventos/listarEventoIdController";
+import { UsersDeleteController } from "./controllers/Users/usersDeleteController";
+import { CadastroCategoriasController } from "./controllers/Categories/cadastroCategoriasController";
+import { ListagemTodasCategoriasController } from "./controllers/Categories/listagemTodasCategoriasController";
+import { ListagemCategoriasIdController } from "./controllers/Categories/listagemCategoriasIdController";
+import { EditarCategoriasController } from "./controllers/Categories/editarCategoriasController";
+import { DeletarCategoriaController } from "./controllers/Categories/deletarCategoriasIdController";
+ 
+import { CadastrarEventoController } from "./controllers/Events/cadastrarEventoController";
+import { ListarTodosEventosController } from "./controllers/Events/listarTodosEventosController";
+import { ListarEventoIdController } from "./controllers/Events/listarEventoIdController";
 import multer from "multer";
 import uploadConfig from '../src/config/multer';
-import { EditarEventoController } from "./controllers/Eventos/editarEventoController";
-import { DeletarEventoController } from "./controllers/Eventos/deletarEventoController";
-import { EditarUsuarioController } from "./controllers/Usuarios/editarUsuarioController";
-import { ListarUsuariosController } from "./controllers/Usuarios/listarUsuariosController";
-import { CadastroProdutoController } from "./controllers/Produtos/cadastroProdutosController";
+import { EditarEventoController } from "./controllers/Events/editarEventoController";
+import { DeletarEventoController } from "./controllers/Events/deletarEventoController";
+import { UsersEditController } from "./controllers/Users/usersEditController";
+import { UsersGetAllController } from "./controllers/Users/usersGetAllController";
+import { CadastroProdutoController } from "./controllers/Products/cadastroProdutosController";
 
-import { ListarProdutosController } from "./controllers/Produtos/listarProdutosController";
-import { DeletarProdutosController } from "./controllers/Produtos/deletarProdutoController";
-import { ListarDetalhesProdutosController } from "./controllers/Produtos/listarDetalhesProdutosController";
-import { EditarProdutosController } from "./controllers/Produtos/editarProdutosController";
+import { ListarProdutosController } from "./controllers/Products/listarProdutosController";
+import { DeletarProdutosController } from "./controllers/Products/deletarProdutoController";
+import { ListarDetalhesProdutosController } from "./controllers/Products/listarDetalhesProdutosController";
+import { EditarProdutosController } from "./controllers/Products/editarProdutosController";
 
 const router = Router()
 
@@ -43,20 +42,18 @@ router.get("/", (req: Request, res: Response) => {
 })
 
 
-router.post('/cadastro', new CadastroUsuarioController().handle)
-router.post("/login", new LoginUsuarioController().handle)
-router.get("/usuario", isLogged, new DetalhesUsuarioController().handle)
-router.delete("/usuario/:id", isLogged, new DeletarUsuariosController().handle)
-router.put("/usuario/:id",isLogged, upload.single('file'), new EditarUsuarioController().handle)
-router.get("/usuarios", isLogged, new ListarUsuariosController().handle)
+router.post('/register', new UsersRegisterController().handle)
+router.post("/login", new UsersLoginController().handle)
 
-// rotas para as cidades
-router.post("/cidades", isLogged, new CadastroCidadesController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.get("/cidades", isLogged, new ListagemTodasCidadesController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario)
-router.get("/cidades/:id", isLogged, new ListagemCidadesIdController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.put("/cidades", isLogged, new EditarCidadesController().handle); // essa rota vai ser chamada no Aplicativo front end( admin )
-router.delete("/cidades/:id", isLogged, new DeletarCidadesIdController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+// rotas para os usuários
+router.get("/users", isLogged, new UsersDetailsController().handle)
+router.delete("/users/:id", isLogged, new UsersDeleteController().handle)
+router.put("/users/:id", isLogged, new UsersEditController().handle)
+router.get("/users", isLogged, new UsersGetAllController().handle)
+router.get("/users/list", isLogged, new UsersGetAllListController().handle)
 
+
+ 
 // rotas para cadastrar categorias 
 router.post("/categorias", isLogged,upload.fields([{ name: "iconeCategoria" }, { name: "urlBannerCategoria" }]), new CadastroCategoriasController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
 router.get("/categorias", isLogged, new ListagemTodasCategoriasController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario )

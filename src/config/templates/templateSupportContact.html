@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato por email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background-color: #f7f7f7;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .header {
+            background-color: #34946a;
+            padding: 15px;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .header img {
+            width: 100px;
+            height: 100px;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        h1 {
+            color: #333;
+        }
+        .product-list {
+            margin-top: 20px;
+        }
+        .product-item {
+            margin-bottom: 10px;
+        }
+        footer {
+            padding: 10px;
+            font-size: 0.9em;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table class="container" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td class="header">
+                <img src="https://res.cloudinary.com/dqfwupqcj/image/upload/v1731965824/gkkfm3r1ebhhharrh0lj.png" style="width: 85px; height: 85px;" alt="Logo">
+            </td>
+        </tr>
+        <tr>
+            <td class="content">
+                <h1><strong>Mensagem de:</strong> {{name}}</h1>
+                <p><strong>Assunto:</strong> {{subject}}</p>
+                <p><strong>Mensagem:</strong> {{message}}</p>
+                <p><strong>E-mail:</strong> {{email}}</p>
+                <p><strong>Telefone:</strong> {{phone}}</p> 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <footer>
+                    <p>Contato por email feito pelo site para o Resort dos Canyons.</p>
+                </footer>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

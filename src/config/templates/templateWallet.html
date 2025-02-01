@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carteira Digital</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        width: 375px;
+        height: 465px;
+        justify-content: space-between;
+        background-color: #f7f7f7;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        display: flex;
+        flex-direction: column;
+        width: 100px;
+     
+        align-items: center;
+        height: 100%;
+        gap: 10px;
+        padding: 2px 0;
+        margin-top: -10px;
+       
+
+        /* Faz o texto ficar na vertical */
+      }
+      .tituloPassport {
+        writing-mode: vertical-rl; /* Modo de escrita na vertical, da direita para a esquerda */
+        text-orientation: upright;
+        font-size: 1.5em;
+        text-align: center;
+        font-weight: bold;
+        color: #384895;
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 2px;
+        text-align: left;
+      }
+      .content p {
+        margin: 5px 0;
+        font-size: 1em;
+      }
+      .markCourt {
+         background-color: white;
+         width: 80px;
+         height: 18px;
+         border-radius: 15px;
+         margin-right: -60px;
+      }
+      .containerInformations {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        padding: 1rem 2rem;
+        width: 210px;
+        background-color: #384895;
+        border-top-left-radius: 8px;
+        border-bottom-right-radius: 4rem;
+      }
+
+      .containerInformations2 {
+        display: flex;
+        gap: 15px;
+        flex-direction: column;
+        padding: 0.5rem 0.5rem 1rem 0.5rem;
+      }
+      .photo {
+        background-color: #e0e0e0;
+        color: #333;
+
+        margin: 15px 0;
+        display: flex;
+      
+        justify-content: center;
+        align-items: center;
+        font-size: 0.9em;
+        border-radius: 15px;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .logo {
+        width: 100%;
+        display: flex;
+      }
+      .blue-text {
+        color: #21408a;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="containerInformations">
+          <div style="display: flex; justify-content: center; align-items: center; width: 100%">
+            <div class="markCourt"></div>
+          </div>
+          <div style="display: flex; flex-direction: row;justify-content: center;align-items: center; gap: 10px">
+              <div class="photo">
+                <img
+                  style="
+                    width: 175px;
+                    height: 155px;
+                    border-radius: 5px;
+                    object-fit: cover;
+                  "
+                  src="{{identificationPhotoUrl}}"
+                  alt="Logo do Resort dos Canyons"
+                />
+
+                
+              </div>
+
+
+           </div>
+            <div style="display: flex; flex-direction: column; gap: 1px">
+              <p style="font-weight: bold; color: #e0e0e0; font-size: 15px; ">
+                {{typeUser}}
+              </p>
+              <div style="display: flex; flex-direction: column; ">
+              <p style="font-weight: bold; color: #e0e0e0; font-size: 1.4rem;height: 20px;">
+                {{userName}}
+              </p>
+              <p style="font-weight: bold; color: #e0e0e0; font-size: 0.8rem;">
+                <strong>ID Titular:</strong> {{idTitular}}
+              </p>
+            </div>
+            </div>
+
+        </div>
+
+        <div class="containerInformations2">
+          <div>
+            <strong style="color: #384895">Identificação da Carteira</strong>
+            <p>{{idWallets}}</p>
+          </div>
+          <div>
+            <strong style="color: #384895">Data de Expiração</strong>
+            <p>{{expirationDate}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="header">
+
+       
+          <img
+            style="width: 90px; object-fit: cover; "
+            src="https://res.cloudinary.com/dqfwupqcj/image/upload/v1731965824/gkkfm3r1ebhhharrh0lj.png"
+            alt="logo"
+          />
+        
+         <p class="tituloPassport">PASSAPORTE</p>
+     
+
+        <div style="display: flex; justify-content: center; ">
+          <img
+          style="width: 85px; height: 85px; border-radius: 5px"
+          src="{{QRCODE}}"
+          alt="Logo do Resort dos Canyons"
+        />
+        </div>
+        
+       
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Compra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .containerLogo {
+            background-color: #34946a;
+            padding: 15px;
+            text-align: center;
+        }
+        h1 {
+            color: #333333;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        h2 {
+            color: #333333;
+            font-size: 18px;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        .button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff; /* cor do texto do botão */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .product-list {
+            margin-top: 20px;
+        }
+        .product-item {
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #f4f4f4;
+            padding: 10px;
+            font-size: 0.9em;
+            color: #888888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="containerLogo">
+            <img src="https://res.cloudinary.com/dqfwupqcj/image/upload/v1731965824/gkkfm3r1ebhhharrh0lj.png" style="width: 85px; height: 85px;" alt="Logo">
+        </div>
+        <div class="content">
+            <h1>Parabéns pela sua compra, {{userName}}!</h1>
+            <h2><strong>Confira os detalhes da sua compra</strong>:</h2>
+            <p><strong>Código do Voucher:</strong> {{codeVoucher}}</p>
+            <p><strong>Código do Pagamento:</strong> {{codePayment}}</p>
+            <p><strong>Referência de Pagamento:</strong> {{codeReferencePayment}}</p>
+            <p><strong>Data do Pagamento:</strong> {{datePayment}}</p>
+            <p><strong>Forma de Pagamento:</strong> {{methodPayment}}</p>
+            <p><strong>Total da Compra:</strong> {{totalPrice}}</p>
+            <p style="text-align: center; margin-top: 20px;">
+                <a href="{{seeMyPurchasesLink}}" class="button" style="color: #ffffff;">Ver Minhas Compras</a>
+            </p>
+        </div>
+        <footer>
+            <p>Obrigado por escolher o Resort dos Canyons. Aproveite sua experiência!</p>
+        </footer>
+    </div>
+</body>
+</html>

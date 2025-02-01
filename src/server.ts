@@ -4,14 +4,24 @@ import "express-async-errors"
 import cors from 'cors'
 import path from 'path'
 import fileUpload from "express-fileupload";
+import {v2 as cloudinary} from 'cloudinary'
+
 const app = express()
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET
+})
+
 app.use(cors())
+
 app.use(fileUpload({
     limits: {
-        fileSize: 50 * 1024
+        fileSize: 50 * 1024 * 1024
     }
 }))
+
 app.use(express.json())
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

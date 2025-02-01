@@ -1,5 +1,4 @@
 // This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -10,93 +9,359 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Users {
+  id     String  @id @default(uuid())
+  idPlan String?
+  idProfileAvatar  String?
+  name       String
+  email      String
+  password   String
+  cpfCnpj    String
+  typePerson String @default("PF") // Pode ser "PF" ou "PJ"
+  birthDate  String
+  phone      String
+  gender     String
 
-model Usuarios {
-  id String @id @default(uuid())
-  nome String 
-  email String
-  senha String
-  cpfCnpj String?
-  idCustomer String?
-  dataNascimento String?
-  endereco String?
-  telefone String?
-  urlRedeSocial String?
-  urlLogoUsuario String?
-  statusUsuario Boolean @default(true)
+  complement     String?
+  street         String?
+  city           String?
+  cep            String?
+  region_code    String?
+  number_address String?
+  neighborhood   String?
+
+  typeAccess          String  @default("client")
+  profileAvatar       String?
+  profileSocialUrl    String?
+
+  tutorialFirstAccess Boolean @default(true)
+
+  registeredBy           String?
+  typeAccessRegisteredBy String?
+  cpfRegisteredBy        String?
+  dateRegisteredBy       String?
+
+  editedBy           String?
+  typeAccessEditedBy String?
+  cpfEditedBy        String?
+  dateEditedBy       String?
+
+  termsUsePlatform   Boolean?
+  termsUseLGPD       Boolean?
+  termsReceiptNews   Boolean?
+  termsPrivacyPolicy Boolean?
+
+  status Boolean @default(true)
+
+  created_At   DateTime  @default(now())
+  updated_At   DateTime?
+  // Relacionamento com planos cadastrados
+  plansCreated Plan[]    @relation("idUserOwnerPlan")
+
+  // Relacionamento com planos adquiridos
+  planSubscription Plan? @relation(fields: [idPlan], references: [id])
+
+  products      Products[]
+  typesProducts TypesProducts[]
+  purchases     Purchases[]
+  events        Events[]
+  categories    Categories[]
+
+  commercials     Commercials[]
+  typeCommercials TypesCommercials[]
+
+  methodsPayments MethodsPayments[]
+
+  ownedCoupons Coupon[] @relation("UserOwner")
+  promoted     Coupon[] @relation("UserPromoter")
+
+  couponUsage CouponUsage[]
+
+  recycleBins Bin[]
+
+  @@map("users")
+}
+
+model Plan {
+  id              String  @id @default(uuid())
+  idUserOwnerPlan String
+  creditsPlan     Int
+  name            String
+  description     String?
+  price           Float
+  duration        Int
+  maxEvents       Int?
+  maxChars        Int?
+
+  status     Boolean     @default(true)
+  created_At DateTime    @default(now())
+  updated_At DateTime?
+  // Quem cadastrou o plano (o dono)
+  pwner      Users       @relation("idUserOwnerPlan", fields: [idUserOwnerPlan], references: [id])
+  purchases  Purchases[]
+
+  // Quem já adquiriu o plano (usuários assinantes)
+  usersWhoSubscribed Users[]
+  coupon             Coupon[]
+  recycleBins        Bin[]
+
+  @@map("plans")
+}
+
+model Categories {
+  id          String @id @default(uuid())
+  idUserOwner String
+
+  name          String
+  label         String
+  icon          String?
+  themeImageUrl String
+
+  created_At  DateTime  @default(now())
+  updated_At  DateTime?
+  events      Events[]
+  recycleBins Bin[]
+  userOwner   Users     @relation(fields: [idUserOwner], references: [id])
+
+  @@map("categories")
+}
+
+model Commercials {
+  id                       String  @id @default(uuid())
+  idUserOwner              String
+  idTypeCommercial         String
+  name                     String
+  description              String?
+  urlImageCommercial       String
+  urlSocialMediaCommercial String?
+  positionOrder            Int?
+
+  status           Boolean?         @default(true)
+  created_At       DateTime?        @default(now())
+  updated_At       DateTime?
+  Users            Users            @relation(fields: [idUserOwner], references: [id])
+  TypesCommercials TypesCommercials @relation(fields: [idTypeCommercial], references: [id])
+  recycleBins      Bin[]
+
+  @@map("Commercials")
+}
+
+model TypesCommercials {
+  id          String @id @default(uuid())
+  idUserOwner String
+  name        String
+  value       String // aqui no value vou colocar o valor da posição left, right, down ou top posição que é onde vai ficar sempre os comerciais. 
+
+  status      Boolean?      @default(true)
+  created_At  DateTime?     @default(now())
+  updated_At  DateTime?
+  Users       Users         @relation(fields: [idUserOwner], references: [id])
+  Commercials Commercials[]
+  recycleBins Bin[]
+
+  @@map("typesCommercials")
+}
+
+model Products {
+  id            String @id @default(uuid())
+  idCategory    String
+  idTypeProduct String
+  idUserOwner   String
+
+  name        String
+  description String
+
+  labelPrice String // é a label que pode ir ao lado do preço se é a entrada,inteira,meia,promoção.
+  price      Float
+
+  expirationDate String
+  dateRegistered String
+
+  positionOrder Int?
+
+  available      Boolean  @default(true)
+  allowAddCoupon Boolean? @default(false)
+
+  status     Boolean?  @default(true)
   created_At DateTime? @default(now())
-  update_At DateTime @default(now())
-  @@map("usuarios")
+  updated_At DateTime?
+
+  events        Events[]
+  purchases     Purchases[]
+  recycleBins   Bin[]
+  Coupon        Coupon[]
+  userOwner     Users?        @relation(fields: [idUserOwner], references: [id])
+  typesProducts TypesProducts @relation(fields: [idTypeProduct], references: [id])
+
+  @@map("products")
 }
 
+model TypesProducts {
+  id          String @id @default(uuid())
+  idUserOwner String
+  name        String
+  value       String // aqui no value vou colocar o valor da posição principal, subprincipal, letreiro e outros. 
 
+  status     Boolean?  @default(true)
+  created_At DateTime? @default(now())
+  updated_At DateTime?
 
-model Cidades {
-  id String @id @default(uuid())
-  nomeCidade String
-  uf String?
-  bannerCidade String?
-  logoCidade String?
-  create_At DateTime? @default(now())
-  update_At DateTime @default(now())
-  @@map("cidades")
+  Users       Users      @relation(fields: [idUserOwner], references: [id])
+  products    Products[]
+  recycleBins Bin[]
+
+  @@map("typesProducts")
 }
 
-model Produtos {
-  id String @id @default(uuid())
-  nome String 
-  descricao String  
-  preco Float
-  status Boolean? @default(true)
-  eventos Eventos[]
-  create_At DateTime? @default(now())
- @@map("produtos")  
+model Events {
+  id          String @id @default(uuid())
+  idUserOwner String
+  idProduct   String
+  idCategory  String
+
+  name          String
+  description   String
+  localityEvent String
+
+  urlLocalityEvent     String
+  urlPostSocialNetwork String? // link do post na rede social mais forte do evento
+
+  bannerImageUrl       String
+  dateEvent            String
+  hourEvent            String
+  placesPurchaseTicket Json? //locais para comprar ingressos
+  restrictionsEvent    Json? // restrições do evento
+  phoneForContact      String? // global
+  status               Boolean @default(true)
+
+  products   Products   @relation(fields: [idProduct], references: [id])
+  categories Categories @relation(fields: [idCategory], references: [id])
+  userOwner  Users      @relation(fields: [idUserOwner], references: [id])
+
+  created_At DateTime  @default(now())
+  updated_At DateTime?
+
+  recycleBins Bin[]
+
+  @@map("events")
 }
 
-model Eventos {
-  id String @id @default(uuid())
-  nome String 
-  descricao String
-  nomeLocalEvento String
-  urlLocalizacaoEvento String
-  urlPostRedeSocial String?
-  bannerEvento String
-  dataEvento String
-  horarioEvento String
-  locaisCompraIngresso String[]
-  restricoesEvento String?
-  telefone String?
-  categorias Categorias @relation(fields: [categoria_id],references: [id])
-  categoria_id String
-  statusEvento Boolean @default(true)
-  produtos Produtos @relation(fields: [produto_id], references: [id])
-  produto_id String
+model Coupon {
+  id                 String   @id @default(uuid())
+  idUserOwner        String?
+  idPromoter         String?
+  idProduct          String?
+  idPlan             String?
+  codeCoupon         String
+  cpfForUseUnique    String?
+  priceDiscount      Float?
+  isPercentage       Boolean? @default(false)
+  commissionPromoter Float?
+  limitUseMax        Int?
+  limitCouponUsed    Int?
+  status             Boolean  @default(true)
+  expirationCoupon   String?
 
-  lixeiraEventos Lixeira[]
- @@map("eventos")
+  plan    Plan?     @relation(fields: [idPlan], references: [id])
+  product Products? @relation(fields: [idProduct], references: [id])
+
+  user     Users? @relation("UserOwner", fields: [idUserOwner], references: [id], onDelete: Cascade)
+  promoter Users? @relation("UserPromoter", fields: [idPromoter], references: [id], onDelete: Cascade)
+
+  created_At DateTime  @default(now())
+  updated_At DateTime?
+
+  couponUsage CouponUsage[]
+  Bin         Bin[]
+
+  @@map("coupon")
 }
 
+model CouponUsage {
+  id                             String   @id @default(uuid())
+  idUserOwner                    String
+  idCouponUsed                   String
+  dateLastPaymentComissionCoupon String?
+  statusComissionPaid            Boolean? @default(false)
 
-model Categorias {
-  id String @id @default(uuid())
-  nome String
-  iconeCategoria String?
-  urlBannerCategoria String?
-  create_At DateTime? @default(now())
-  update_At DateTime @default(now())
-  eventos Eventos[]
- @@map("categorias")
+  coupon Coupon @relation(fields: [idCouponUsed], references: [id])
+  user   Users  @relation(fields: [idUserOwner], references: [id])
+
+  created_At DateTime  @default(now())
+  updated_At DateTime?
+
+  @@map("couponusage")
 }
 
-model Lixeira {
-  id String @id @default(uuid())
-  eventos Eventos @relation(fields: [evento_id], references: [id])
-  evento_id String
- @@map("lixeira")
+model MethodsPayments {
+  id                String      @id @default(uuid())
+  idUserOwner       String
+  name              String
+  description       String
+  typeMethodPayment String
+  created_At        DateTime    @default(now())
+  updated_At        DateTime?
+  purchases         Purchases[]
+  Users             Users       @relation(fields: [idUserOwner], references: [id])
+  status            Boolean     @default(true)
+  Bin               Bin[]
+
+  @@map("methodspayments")
 }
 
+model Purchases {
+  id                   String  @id @default(uuid())
+  idUser               String
+  idMethodPayment      String
+  idProduct            String?
+  idPlan               String?
+  datePayment          String
+  codePayment          String
+  codeReferencePayment String
+  totalPrice           Float
+  products             Json
+  status               Boolean @default(true)
 
+  created_At DateTime  @default(now())
+  updated_At DateTime?
 
+  user            Users           @relation(fields: [idUser], references: [id])
+  methodsPayments MethodsPayments @relation(fields: [idMethodPayment], references: [id])
+  product         Products?       @relation(fields: [idProduct], references: [id])
+  plan            Plan?           @relation(fields: [idPlan], references: [id])
+  Bin             Bin[]
 
+  @@map("purchases")
+}
 
+model Bin {
+  id                String  @id @default(uuid())
+  idPurchase        String?
+  idMethodsPayments String?
+  idCommercials     String?
+  idTypeComercials  String?
+  idPlan            String?
+  idCoupon          String?
+  idUser            String?
+  idEvent           String?
+  idCategory        String?
+  idProduct         String?
+  idTypesProducts   String?
 
+  created_At DateTime  @default(now())
+  updated_At DateTime?
+
+  plan             Plan?             @relation(fields: [idPlan], references: [id])
+  coupon           Coupon?           @relation(fields: [idCoupon], references: [id])
+  categories       Categories?       @relation(fields: [idCategory], references: [id])
+  events           Events?           @relation(fields: [idEvent], references: [id])
+  products         Products?         @relation(fields: [idProduct], references: [id])
+  typesProducts    TypesProducts?    @relation(fields: [idTypesProducts], references: [id])
+  users            Users?            @relation(fields: [idUser], references: [id])
+  typesCommercials TypesCommercials? @relation(fields: [idTypeComercials], references: [id])
+  commercials      Commercials?      @relation(fields: [idCommercials], references: [id])
+  purchases        Purchases?        @relation(fields: [idPurchase], references: [id])
+  methodsPayments  MethodsPayments?  @relation(fields: [idMethodsPayments], references: [id])
+
+  @@map("bin")
+}

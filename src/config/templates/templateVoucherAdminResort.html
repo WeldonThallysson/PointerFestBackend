@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Compra - Administrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background-color: #f7f7f7;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .header {
+            background-color: #34946a;
+            padding: 15px;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .header img {
+            width: 100px;
+            height: 100px;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        h1 {
+            color: #333;
+        }
+        .product-list {
+            margin-top: 20px;
+        }
+        .product-item {
+            margin-bottom: 10px;
+        }
+        footer {
+            padding: 10px;
+            font-size: 0.9em;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table class="container" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td class="header">
+                <img src="https://res.cloudinary.com/dqfwupqcj/image/upload/v1731965824/gkkfm3r1ebhhharrh0lj.png" style=" width: 85px; height: 85px;" alt="Logo">
+            </td>
+        </tr>
+        <tr>
+            <td class="content">
+                <h1>Confirmação de Compra - Cliente {{userName}}</h1>
+                <p><strong>ID Cliente:</strong> {{idUser}}</p>
+                <p><strong>Nome:</strong> {{name}}</p>
+                <p><strong>CPF:</strong> {{cpf}}</p>
+                <p><strong>Código do Voucher:</strong> {{codeVoucher}}</p>
+                <p><strong>Código do Pagamento:</strong> {{codePayment}}</p>
+                <p><strong>Referência de Pagamento:</strong> {{codeReferencePayment}}</p>
+                <p><strong>Data do Pagamento:</strong> {{datePayment}}</p>
+                <p><strong>Forma de Pagamento:</strong> {{methodPayment}}</p>
+                <p><strong>Total da Compra:</strong> {{totalPrice}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <footer>
+                    <p>Notificação de compra gerada automaticamente para o Resort dos Canyons.</p>
+                </footer>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
