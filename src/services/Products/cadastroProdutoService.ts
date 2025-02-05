@@ -9,9 +9,9 @@ interface ICadastroProduto {
  
 class CadastroProdutoService {
   async execute ({nome, descricao,preco}: ICadastroProduto) {
-      const produtoExiste = await prismaClient.produtos.findFirst({
+      const produtoExiste = await prismaClient.products.findFirst({
          where: {
-            nome: nome
+            name: nome
          } 
       })
 
@@ -21,19 +21,19 @@ class CadastroProdutoService {
             message: "Esse nome de produto já existe, tente outro nome!"
          }
       }
-
-      const produto = await prismaClient.produtos.create({
+   /*
+      const produto = await prismaClient.products.create({
           data: {
-             nome: nome,
-             descricao: descricao,
-             preco: preco
+             name: nome,
+             description: descricao,
+             price: preco,
+             
           } 
       })    
-      
+     */ 
       return {
          status: 200,
          message: "Cadastrado realizado com sucesso",
-         idProduto: produto.id
       }
   }
 }

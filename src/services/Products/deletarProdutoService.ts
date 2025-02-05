@@ -5,7 +5,7 @@ interface IDeletarProdutosService {
 }
 class DeletarProdutosService {
     async execute({id}:IDeletarProdutosService){
-        const produtoDeletado = await prismaClient.produtos.delete({
+        const produtoDeletado = await prismaClient.products.delete({
             where: {
                 id: id
             }

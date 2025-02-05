@@ -29,8 +29,16 @@ class UsersLoginService {
 
     const users = await prismaClient.users.findFirst({
       where: {
-        email: account,
-        cpfCnpj: account,
+        OR: [
+          {
+            cpfCnpj: account,
+          },
+          {
+            email: account
+          },
+        ]
+    
+    
       },
     });
 
@@ -57,6 +65,7 @@ class UsersLoginService {
 
     const token = sign(
       {
+        id: users.id,
         name: users.name,
         password: users.password,
       },
@@ -68,9 +77,12 @@ class UsersLoginService {
     );
 
     return {
-      id: users.id,
-      email: users.email,
-      token: token,
+      data: {
+        message: `Bem Vindo ${users.name.split(" ")[0].charAt(0).toUpperCase()}${users.name.split(" ")[0].slice(1).toLocaleLowerCase()}`,
+        token: token,
+        status: 200
+      }
+
     };
   }
 }

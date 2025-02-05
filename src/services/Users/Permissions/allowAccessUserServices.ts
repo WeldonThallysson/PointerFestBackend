@@ -2,16 +2,16 @@ import { TypesAccess } from "../../../keys/typeAccess/typesAccess";
 import prismaClient from "../../../prisma";
 
 interface IAllowAccessUserService {
-  cpfCnpj_user: string;
+  cpfCnpj: string;
   id_user_logged: string;
-  typeAccessParam?: string | null;
+  typeAccess?: string | null;
 }
 
 class AllowAccessUserService {
   async execute({
-    cpfCnpj_user,
+    cpfCnpj,
     id_user_logged,
-    typeAccessParam,
+    typeAccess,
   }: IAllowAccessUserService) {
     if (!id_user_logged) {
       return {
@@ -22,7 +22,7 @@ class AllowAccessUserService {
       };
     }
 
-    if (!cpfCnpj_user) {
+    if (!cpfCnpj) {
       return {
         data: {
           message: "Não foi possível realizar esta ação, por favor envie o CPF ou CNPJ do usuário.",
@@ -32,17 +32,16 @@ class AllowAccessUserService {
     }
 
     if (
-      typeAccessParam !== TypesAccess.Owner &&
-      typeAccessParam !== TypesAccess.Developer &&
-      typeAccessParam !== TypesAccess.Master &&
-      typeAccessParam !== TypesAccess.Admin &&
-      typeAccessParam !== TypesAccess.Promoter &&
-      typeAccessParam !== TypesAccess.User
+      typeAccess !== TypesAccess.Owner &&
+      typeAccess !== TypesAccess.Developer &&
+      typeAccess !== TypesAccess.Master &&
+      typeAccess !== TypesAccess.Admin &&
+      typeAccess !== TypesAccess.Promoter &&
+      typeAccess !== TypesAccess.User
     ) {
       return {
         data: {
-          message:
-            "Não foi possível realizar esta ação, tipo de acesso não reconhecido pelo sistema.",
+          message: "Não foi possível realizar esta ação, tipo de acesso não reconhecido pelo sistema.",
           typesAccessAccepts: [
             TypesAccess.Owner,
             TypesAccess.Developer,
@@ -65,7 +64,7 @@ class AllowAccessUserService {
 
     const userExists = await prismaClient.users.findFirst({
       where: {
-        cpfCnpj: cpfCnpj_user,
+        cpfCnpj: cpfCnpj,
       },
     });
 
@@ -117,7 +116,7 @@ class AllowAccessUserService {
         id: userExists.id,
       },
       data: {
-        typeAccess: typeAccessParam ? typeAccessParam : TypesAccess.User,
+        typeAccess: typeAccess ? typeAccess : TypesAccess.User,
       },
     });
 

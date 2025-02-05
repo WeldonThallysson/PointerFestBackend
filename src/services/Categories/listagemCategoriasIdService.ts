@@ -9,7 +9,7 @@ class ListagemCategoriasIdService {
         if(!id){
             throw new Error("Error id da categoria não enviado")
         }
-        const listagemCategorias = await prismaClient.categorias.findFirst({
+        const listagemCategorias = await prismaClient.categories.findFirst({
             where: {
                 id: id
             }

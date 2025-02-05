@@ -33,6 +33,7 @@ export const validationsUserService = ({
   birthDate,
   gender,
   typePerson,
+  password
 }: IParamsUserService) => {
 
   const validatorEmpty = validatorFieldsEmpty(
@@ -69,6 +70,28 @@ export const validationsUserService = ({
     return {
       data: {
         message: "Não foi possível realizar está ação, Número de telefone inválido.",
+        status: 400,
+      },
+    };
+  }
+
+  
+  if(password.length < 8 ){
+    return {
+      data: {
+        message:
+          "A senha deve ter de 8 a 14 caracteres para garantir maior segurança.",
+        status: 400,
+      },
+    };
+  }
+
+  
+  if(password.length > 14 ){
+    return {
+      data: {
+        message:
+          "A senha deve ter de 8 a 14 caracteres para garantir maior segurança. você ultrapassou o limite de caracteres",
         status: 400,
       },
     };
@@ -121,6 +144,7 @@ export const validationsUserService = ({
       },
     };
   }
+
 
 
 };

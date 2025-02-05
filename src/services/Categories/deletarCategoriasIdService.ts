@@ -7,7 +7,7 @@ interface DeletarCategoriasType {
 
 class DeletarCategoriasIdService{
     async execute({id}: DeletarCategoriasType){
-        const deletarCategoriasId = await prismaClient.categorias.delete({
+        const deletarCategoriasId = await prismaClient.categories.delete({
             where: {
                 id: id
             }

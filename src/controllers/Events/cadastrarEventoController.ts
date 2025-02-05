@@ -16,20 +16,21 @@ interface IResponseCadastrarEventoController {
 
 class CadastrarEventoController {
     async handle(req: Request, res: Response){
+        const id_user_logged = req.url
         const { 
-            nome,
-            descricao,
-            nomeLocalEvento,
-            urlLocalizacaoEvento,
-            dataEvento,
-            horarioEvento,
-            categoria_id,
-            locaisCompraIngresso,
-            urlInstagramDoComerciante,
-            telefone,
-           restricoesEvento,
-           produto_id,
-           statusEvento,
+          idProduct,
+          idCategory,
+          name,
+          description,
+          localityEvent,
+          urlLocalityEvent,
+          bannerImageUrl,
+          dateEvent,
+          hourEvent,
+          restrictionsEvent,
+          placesPurchaseTicket,
+          urlPostSocialNetwork,
+          phoneForContact,
         } = req.body;
 
         const cadastrarEvento = new CadastrarEventoService()
@@ -50,20 +51,20 @@ class CadastrarEventoController {
               });
               
             const eventoCadastrado = await cadastrarEvento.execute({ 
-                nome,
-                descricao,
-                nomeLocalEvento,
-                urlLocalizacaoEvento,
-                bannerEvento: resultFile.url,
-                dataEvento,
-                horarioEvento,
-                categoria_id,
-                locaisCompraIngresso,
-                urlInstagramDoComerciante,
-                telefone,
-                restricoesEvento,
-                produto_id,
-                statusEvento,
+              idUserOwner: id_user_logged,
+              idProduct,
+              idCategory,
+              name,
+              description,
+              localityEvent,
+              urlLocalityEvent,
+              bannerImageUrl,
+              dateEvent,
+              hourEvent,
+              restrictionsEvent,
+              placesPurchaseTicket,
+              urlPostSocialNetwork,
+              phoneForContact,
              }) as IResponseCadastrarEventoController
              
              if(eventoCadastrado.status === 403){

@@ -7,12 +7,12 @@ interface listarEventosIdType {
 
 class ListarEventoIdService {
     async execute({id}: listarEventosIdType){
-        const listarEventoId = await prismaClient.eventos.findFirst({
+        const listarEventoId = await prismaClient.events.findFirst({
             where: {
                 id: id,
             },
             include: { 
-               categorias: true,
+               categories: true,
            }
         })
 

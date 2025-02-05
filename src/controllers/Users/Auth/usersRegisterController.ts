@@ -37,7 +37,7 @@ class UsersRegisterController {
             termsReceiptNews
         });
 
-         res.json(responseUsersRegister)      
+         res.status(responseUsersRegister.data.status).json(responseUsersRegister.data)      
     }
 
 }

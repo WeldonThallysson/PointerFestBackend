@@ -11,7 +11,7 @@ class UsersLoginController {
       password,
     });
 
-    return res.json(responseUsersLogin);
+    return res.status(responseUsersLogin?.data?.status).json(responseUsersLogin?.data);
   }
 }
 

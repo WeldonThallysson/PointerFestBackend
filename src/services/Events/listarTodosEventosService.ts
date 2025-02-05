@@ -5,17 +5,15 @@ interface IListarTodosEventosService {
 }
 class ListarTodosEventosService {
     async execute({nome}: IListarTodosEventosService){
-        const listarTodosEventos = await prismaClient.eventos.findMany({
+        const listarTodosEventos = await prismaClient.events.findMany({
             where: {
-                ...(nome && {
-                    nome: {
-                        contains: nome,
-                        mode: "insensitive",
-                    }
-                })
+                name: {
+                    contains: nome,
+                    mode: "insensitive",
+                }
             },
             include: { 
-                categorias: true,
+                categories: true,
             }
  
         })

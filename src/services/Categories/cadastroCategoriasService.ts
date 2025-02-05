@@ -2,17 +2,19 @@ import prismaClient from "../../prisma";
 
 
 interface CadastroCategoriaType {
-    nome: string
-    iconeCategoria?: string | null
-    urlBannerCategoria?: string | null
+    idUserOwner: string
+    name: string
+    label?: string | null;
+    icon?: string | null
+    themeImageUrl?: string | null
 }
 
 class CadastroCategoriasService {
-    async execute({nome,iconeCategoria,urlBannerCategoria}: CadastroCategoriaType){
+    async execute({idUserOwner, name,label, icon,themeImageUrl}: CadastroCategoriaType){
            
-        const categoriaExiste = await prismaClient.categorias.findFirst({
+        const categoriaExiste = await prismaClient.categories.findFirst({
             where: {
-                nome: nome
+                name: name
             }
         })
         if(categoriaExiste){
@@ -22,12 +24,14 @@ class CadastroCategoriasService {
             }
         }
         
-        const cadastroCategoria = await prismaClient.categorias.create({
+        const cadastroCategoria = await prismaClient.categories.create({
             data:{
-                nome: nome,
-                ...(iconeCategoria && { iconeCategoria: iconeCategoria }),
-                ...(urlBannerCategoria && {urlBannerCategoria: urlBannerCategoria})
-            
+                idUserOwner: idUserOwner,
+                name: name,
+                label: label ? label : null,
+                icon: icon ? icon : null,
+                themeImageUrl: themeImageUrl ? themeImageUrl : null,
+              
             }
         })
       

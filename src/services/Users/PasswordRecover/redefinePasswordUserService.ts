@@ -4,10 +4,11 @@ import { hash } from "bcryptjs";
 interface IRefinePasswordService {
   tokenPassword: string;
   newPassword: string;
+  confirmPassword: string;
 }
 
 class RedefinePasswordService {
-  async execute({ tokenPassword, newPassword }: IRefinePasswordService) {
+  async execute({ tokenPassword, newPassword,confirmPassword }: IRefinePasswordService) {
     if (!tokenPassword) {
       return {
         data: {
@@ -31,7 +32,7 @@ class RedefinePasswordService {
         data: {
           message:
             "A senha deve ter de 8 a 14 caracteres para garantir maior segurança.",
-          status: 401,
+          status: 400,
         },
       };
     }
@@ -42,11 +43,20 @@ class RedefinePasswordService {
         data: {
           message:
             "A senha deve ter de 8 a 14 caracteres para garantir maior segurança. você ultrapassou o limite de caracteres",
-          status: 401,
+          status: 400,
         },
       };
     }
 
+    if(newPassword !== confirmPassword ){
+      return {
+        data: {
+          message: "As credenciais informadas não coincidem. Confirme a senha corretamente para continuar",
+          status: 400,
+        },
+      };
+    }
+    
     try {
       const decoded = jsonwebtoken.verify(
         tokenPassword,

@@ -7,7 +7,8 @@ interface IResponseCadastroCategoria {
 }
 class CadastroCategoriasController {
   async handle(req: Request, res: Response) {
-    const { nome } = req.body;
+    const id_user_logged = req.user_id
+    const { name,icon,label,themeImageUrl } = req.body;
 
     //const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     //const iconeCategoria = files["iconeCategoria"]?.[0].filename;
@@ -15,9 +16,11 @@ class CadastroCategoriasController {
 
     const cadastroCategoria = new CadastroCategoriasService();
     const cadastro = await cadastroCategoria.execute({
-      nome,
-      //iconeCategoria,
-      //urlBannerCategoria,
+      idUserOwner: id_user_logged,
+      name, 
+      label,
+      icon,
+      themeImageUrl,
     }) as IResponseCadastroCategoria;
 
       if(cadastro.status === 403){

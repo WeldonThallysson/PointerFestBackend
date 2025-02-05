@@ -2,60 +2,68 @@ import prismaClient from "../../prisma";
 
 interface EditarEventoServiceType {
   id: string;
-  nome: string;
-  descricao: string;
-  nomeLocalEvento: string;
-  urlLocalizacaoEvento: string;
-  bannerEvento: string;
-  dataEvento: string;
-  horarioEvento: string;
-  categoria_id: string;
-  locaisCompraIngresso?: string[];
-  urlInstagramDoComerciante?: string;
-  restricoesEvento?: string;
-  telefone?: string;
-  produto_id: string
-  statusEvento: boolean
+  idUserOwner: string;
+  idProduct: string;
+  name: string;
+  description: string;
+  localityEvent: string;
+  urlLocalityEvent: string;
+  bannerImageUrl: string;
+  dateEvent: string;
+  hourEvent: string;
+  idCategory: string; 
+  restrictionsEvent?: string;
+  placesPurchaseTicket: string;
+  urlPostSocialNetwork: string;
+  phoneForContact?: string;
+  status?: boolean | null
 }
 
 class EditarEventosService {
   async execute({
     id,
-    nome,
-    descricao,
-    nomeLocalEvento,
-    urlLocalizacaoEvento,
-    bannerEvento,
-    dataEvento,
-    horarioEvento,
-    categoria_id,
-    locaisCompraIngresso,
-    urlInstagramDoComerciante,
-    telefone,
-    produto_id,
-    restricoesEvento,
-    statusEvento,
+    idUserOwner,
+    idProduct,
+    name,
+    description,
+    localityEvent,
+    urlLocalityEvent,
+    bannerImageUrl,
+    dateEvent,
+    hourEvent,
+    idCategory,
+    restrictionsEvent,
+    placesPurchaseTicket,
+    urlPostSocialNetwork,
+    phoneForContact,
+    status
   }: EditarEventoServiceType) {
-    const editar = await prismaClient.eventos.update({
+
+
+    //idUserOwner
+
+
+    const editar = await prismaClient.events.update({
       where: {
         id: id,
       },
 
       data: {
-      nome: nome,
-      descricao: descricao,
-      produto_id: produto_id,
-      nomeLocalEvento: nomeLocalEvento,
-      urlLocalizacaoEvento: urlLocalizacaoEvento,
-      bannerEvento: bannerEvento,
-      dataEvento: dataEvento,
-      horarioEvento: horarioEvento,
-      categoria_id: categoria_id,
-      restricoesEvento: restricoesEvento,
-      locaisCompraIngresso: locaisCompraIngresso,
-      urlPostRedeSocial: urlInstagramDoComerciante,
-      telefone: telefone,
-      statusEvento: Boolean(statusEvento),
+      name: name,
+      
+      description: description,
+      idProduct: idProduct,
+      idCategory: idCategory,
+      localityEvent: localityEvent,
+      urlLocalityEvent: urlLocalityEvent,
+      bannerImageUrl: "", // aqui vai a url do evento,
+      dateEvent: dateEvent,
+      hourEvent: hourEvent,
+      restrictionsEvent: restrictionsEvent,
+      placesPurchaseTicket: placesPurchaseTicket,
+      urlPostSocialNetwork: urlPostSocialNetwork,
+      phoneForContact: phoneForContact,
+      status: status ? status : true,
       },
     });
     return editar;

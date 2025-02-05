@@ -3,32 +3,40 @@ import prismaClient from "../../prisma";
 
 interface EditarCategoriasType {
     id: string,
-    nome: string
-    iconeCategoria?: string | null
-    urlBannerCategoria?: string | null
+    name: string
+    label?: string | null;
+    icon?: string | null
+    themeImageUrl?: string | null
 }
 
 class EditarCategoriasService {
-    async execute({id,nome,iconeCategoria,urlBannerCategoria}: EditarCategoriasType){
+    async execute({
+        id,
+        name,
+        label,
+        icon,
+        themeImageUrl
+    }: EditarCategoriasType){
         
         
-        const editarCategoria = await prismaClient.categorias.update({
+        if(name === ""){
+            throw new Error("envie valores para a atualização")
+        }
+        
+        const editarCategoria = await prismaClient.categories.update({
             where: {
                 id: id
             },
             
             data:{
-                nome: nome,
-                ...(iconeCategoria && { iconeCategoria: iconeCategoria }),
-                ...(urlBannerCategoria && {urlBannerCategoria: urlBannerCategoria})
-            
+                name: name,
+                label: label,
+                icon: icon,
+                themeImageUrl: themeImageUrl
             }
 
         })
 
-        if(nome === ""){
-            throw new Error("envie valores para a atualização")
-        }
 
         return editarCategoria
 

@@ -3,7 +3,13 @@ import { EditarCategoriasService } from "../../services/Categories/editarCategor
 
 class EditarCategoriasController {
   async handle(req: Request, res: Response) {
-    const { id, nome } = req.body;
+    const { 
+      id, 
+      name, 
+      label,
+      icon,
+      themeImageUrl,
+    } = req.body;
 
     //const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     //const iconeCategoria = files["iconeCategoria"]?.[0].filename;
@@ -12,7 +18,10 @@ class EditarCategoriasController {
     const editarCategoria = new EditarCategoriasService();
     const editar = await editarCategoria.execute({
       id,
-      nome,
+      name, 
+      label,
+      icon,
+      themeImageUrl,
       //iconeCategoria,
       //urlBannerCategoria,
     });

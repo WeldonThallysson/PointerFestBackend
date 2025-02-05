@@ -28,6 +28,9 @@ import { ListarProdutosController } from "./controllers/Products/listarProdutosC
 import { DeletarProdutosController } from "./controllers/Products/deletarProdutoController";
 import { ListarDetalhesProdutosController } from "./controllers/Products/listarDetalhesProdutosController";
 import { EditarProdutosController } from "./controllers/Products/editarProdutosController";
+import { UsersGetAllListController } from "./controllers/Users/usersListUsersController";
+import { RecoverPasswordController } from "./controllers/Users/PasswordRecover/recoverPasswordUserController";
+import { RedefinePasswordController } from "./controllers/Users/PasswordRecover/redefinePasswordUserController";
 
 const router = Router()
 
@@ -42,8 +45,11 @@ router.get("/", (req: Request, res: Response) => {
 })
 
 
-router.post('/register', new UsersRegisterController().handle)
+router.post("/register", new UsersRegisterController().handle)
 router.post("/login", new UsersLoginController().handle)
+
+router.post("/password/recover", new RecoverPasswordController().handle)
+router.post("/password/redefine", new RedefinePasswordController().handle)
 
 // rotas para os usuários
 router.get("/users", isLogged, new UsersDetailsController().handle)

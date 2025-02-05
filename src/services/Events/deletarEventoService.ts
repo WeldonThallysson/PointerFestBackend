@@ -8,7 +8,7 @@ interface DeletarEventoIdType {
 
 class DeletarEventoService {
     async execute({id}: DeletarEventoIdType){
-        const deletarEvento = await prismaClient.eventos.delete({
+        const deletarEvento = await prismaClient.events.delete({
             where: {
                 id: id
             }

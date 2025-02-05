@@ -6,7 +6,7 @@ interface IListarDetalhesProdutosService {
 
 class ListarDetalhesProdutosService {
     async execute({id}: IListarDetalhesProdutosService){
-        const produtos = await prismaClient.produtos.findFirst({
+        const produtos = await prismaClient.products.findFirst({
             where: {
                 id: id
             }

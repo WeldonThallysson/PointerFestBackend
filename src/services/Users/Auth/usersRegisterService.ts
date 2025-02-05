@@ -70,7 +70,7 @@ class UsersRegisterService {
     const passwordHash = await hash(password, 8);
     const todayAt = todayWithTime();
 
-    const users = await prismaClient.users.create({
+     await prismaClient.users.create({
       data: {
         name: name,
         email: email,
@@ -86,14 +86,14 @@ class UsersRegisterService {
         termsReceiptNews: termsReceiptNews !== null ? termsReceiptNews : null,
         created_At: todayAt,
       },
-      select: {
-        id: true,
-        created_At: true,
-        updated_At: true,
-      },
     });
 
-    return users;
+    return {
+      data: {
+        message: "Cadastro realizado com sucesso !",
+        status: 200,
+      }
+    };
   }
 }
 
