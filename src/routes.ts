@@ -3,15 +3,15 @@ import { Router,Request,Response } from "express";
 import { UsersRegisterController } from "./controllers/Users/Auth/usersRegisterController";  
 import { UsersLoginController } from "./controllers/Users/Auth/usersLoginController"; 
 
-import { UsersDetailsController } from "./controllers/Users/usersDetailsController";
+import { UsersGetDetailsController } from "./controllers/Users/usersGetDetailsController";
  
 import { isLogged } from "./middlewares/isLogged";
 import { UsersDeleteController } from "./controllers/Users/usersDeleteController";
-import { CadastroCategoriasController } from "./controllers/Categories/cadastroCategoriasController";
-import { ListagemTodasCategoriasController } from "./controllers/Categories/listagemTodasCategoriasController";
-import { ListagemCategoriasIdController } from "./controllers/Categories/listagemCategoriasIdController";
-import { EditarCategoriasController } from "./controllers/Categories/editarCategoriasController";
-import { DeletarCategoriaController } from "./controllers/Categories/deletarCategoriasIdController";
+import { CategoriesRegisterController } from "./controllers/Categories/categoriesRegisterController";
+import { ListagemTodasCategoriasController } from "./controllers/Categories/categoriesGetAllController";
+import { ListagemCategoriasIdController } from "./controllers/Categories/categoriesGetDetailsController";
+import { EditarCategoriasController } from "./controllers/Categories/categoriesEditController";
+import { DeletarCategoriaController } from "./controllers/Categories/categoriesDeleteController";
  
 import { CadastrarEventoController } from "./controllers/Events/cadastrarEventoController";
 import { ListarTodosEventosController } from "./controllers/Events/listarTodosEventosController";
@@ -31,6 +31,10 @@ import { EditarProdutosController } from "./controllers/Products/editarProdutosC
 import { UsersGetAllListController } from "./controllers/Users/usersListUsersController";
 import { RecoverPasswordController } from "./controllers/Users/PasswordRecover/recoverPasswordUserController";
 import { RedefinePasswordController } from "./controllers/Users/PasswordRecover/redefinePasswordUserController";
+import { AllowAccessUserController } from "./controllers/Users/Permissions/allowAccessUserController";
+import { AllowUpdateTutorialFirstAccessController } from "./controllers/Users/Permissions/allowUpdateTutorialFirstAccessController";
+import { AllowUpdateTermsController } from "./controllers/Users/Permissions/allowUpdateTermsController";
+import { UsersRegisterOtherController } from "./controllers/Users/usersRegisterController";
 
 const router = Router()
 
@@ -45,27 +49,32 @@ router.get("/", (req: Request, res: Response) => {
 })
 
 
-router.post("/register", new UsersRegisterController().handle)
-router.post("/login", new UsersLoginController().handle)
-
-router.post("/password/recover", new RecoverPasswordController().handle)
-router.post("/password/redefine", new RedefinePasswordController().handle)
+router.post("/auth/login", new UsersLoginController().handle); // endpoint para login
+router.post("/auth/register", new UsersRegisterController().handle); // endpoint para cadastrar uma conta cliente normal
+router.post("/auth/recoverpassword", new RecoverPasswordController().handle) // endpoint para requerir a recuperação de senha com email
+router.post("/auth/redefinepassword", new RedefinePasswordController().handle) // endpoint para redefinir a senha com token gerado pelo sistema.
 
 // rotas para os usuários
-router.get("/users", isLogged, new UsersDetailsController().handle)
-router.delete("/users/:id", isLogged, new UsersDeleteController().handle)
-router.put("/users/:id", isLogged, new UsersEditController().handle)
-router.get("/users", isLogged, new UsersGetAllController().handle)
-router.get("/users/list", isLogged, new UsersGetAllListController().handle)
-
 
  
+router.post("/users", new UsersRegisterOtherController().handle); 
+router.get("/users/list", isLogged, new UsersGetAllListController().handle)
+router.get("/users/:id", isLogged, new UsersGetDetailsController().handle)
+router.delete("/users/:id", isLogged, new UsersDeleteController().handle)
+router.put("/users", isLogged, new UsersEditController().handle)
+router.get("/users", isLogged, new UsersGetAllController().handle)
+
+router.put("/users/permissions", isLogged, new AllowAccessUserController().handle); // endpoint para contas master poderem tornar outras contas master
+router.put("/users/firstAcess", isLogged, new AllowUpdateTutorialFirstAccessController().handle)
+ 
+router.put("/users/terms", isLogged, new AllowUpdateTermsController().handle);//atualiza
+// endpoint para cadastrar uma conta cliente normal
 // rotas para cadastrar categorias 
-router.post("/categorias", isLogged,upload.fields([{ name: "iconeCategoria" }, { name: "urlBannerCategoria" }]), new CadastroCategoriasController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.get("/categorias", isLogged, new ListagemTodasCategoriasController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario )
-router.get("/categorias/:id", isLogged,new ListagemCategoriasIdController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.put("/categorias", isLogged,upload.fields([{name: 'iconeCategoria'},{name: "urlBannerCategoria"}]), new EditarCategoriasController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.delete("/categorias/:id", isLogged, new DeletarCategoriaController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+router.post("/categories", isLogged, new CategoriesRegisterController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+router.get("/categories", isLogged, new ListagemTodasCategoriasController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario )
+router.get("/categories/:id", isLogged, new ListagemCategoriasIdController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+router.put("/categories", isLogged, new EditarCategoriasController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+router.delete("/categories/:id", isLogged, new DeletarCategoriaController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
 
 // rotas para cadastrar Eventos
 

@@ -1,5 +1,6 @@
 import { Request,Response } from "express";
 import { UsersEditService } from "../../services/Users/usersEditService";
+import { UploadedFile } from "express-fileupload";
 
 
 
@@ -8,8 +9,6 @@ class UsersEditController {
         const id_user_logged = req.user_id
         const {
             id,
-      
-        
             name,
             email,
             password,
@@ -18,7 +17,6 @@ class UsersEditController {
             birthDate,
             phone,
             gender,
-        
             complement,
             street,
             city,
@@ -29,7 +27,8 @@ class UsersEditController {
             profileSocialUrl,
             status
         } = req.body
- 
+
+        const profileAvatar = req.files.profileAvatar as UploadedFile
         //const files = req.files as {[filename: string]: Express.Multer.File[]}
          //const urlLogoUsuario = files['urlLogoUsuario']?.[0].filename;
 
@@ -55,12 +54,13 @@ class UsersEditController {
             number_address,
             neighborhood,
             profileSocialUrl,
+            profileAvatar,
             ...(status !== null && {status: status !== 'false' ? true : false})
             //urlLogoUsuario,
             
         })
 
-        res.json(responseEdit)
+        res.status(responseEdit?.data?.status).json(responseEdit?.data?.message)
     }
 
 }

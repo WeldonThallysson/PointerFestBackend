@@ -54,7 +54,7 @@ class RecoverPasswordService {
       );
 
       const resetLink = `${process.env.FRONTEND_URL}${process.env.LINK_REDEFINE_PASSWORD_URL}/${tokenRecoverPassword}`;
-      const filePath = path.join( __dirname,"../../../constants/templates/templateRecoverPassword.html");
+      const filePath = path.join( __dirname,"../../../config/templates/templateRecoverPassword.html");
       let htmlContent = fs.readFileSync(filePath, "utf-8");
 
       htmlContent = htmlContent

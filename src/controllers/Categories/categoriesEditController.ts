@@ -1,22 +1,23 @@
 import { Request, Response } from "express";
 import { EditarCategoriasService } from "../../services/Categories/editarCategoriasService";
+import { UploadedFile } from "express-fileupload";
 
-class EditarCategoriasController {
+class CategoriesEditController {
   async handle(req: Request, res: Response) {
     const { 
       id, 
       name, 
       label,
-      icon,
       themeImageUrl,
     } = req.body;
 
     //const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     //const iconeCategoria = files["iconeCategoria"]?.[0].filename;
     //const urlBannerCategoria = files["urlBannerCategoria"]?.[0]?.filename;
+    const icon = req.files.icon as UploadedFile
 
-    const editarCategoria = new EditarCategoriasService();
-    const editar = await editarCategoria.execute({
+    const categoriesEditController = new CategoriesEditService();
+    const responseCategoriesEditController = await categoriesEditController.execute({
       id,
       name, 
       label,
@@ -26,8 +27,8 @@ class EditarCategoriasController {
       //urlBannerCategoria,
     });
 
-    return res.json(editar);
+    return res.status(responseCategoriesEditController.data.status).json(responseCategoriesEditController.data);
   }
 }
 
-export { EditarCategoriasController };
+export { CategoriesEditController };

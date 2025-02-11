@@ -1,21 +1,24 @@
 import { Request, Response } from "express";
-import { CadastroCategoriasService } from "../../services/Categories/cadastroCategoriasService";
+import { CategoriesRegisterService } from "../../services/Categories/categoriesRegisterService";
+import { UploadedFile } from "express-fileupload";
 
 interface IResponseCadastroCategoria {
   status?: number
   message?: string
 }
-class CadastroCategoriasController {
+class CategoriesRegisterController {
   async handle(req: Request, res: Response) {
     const id_user_logged = req.user_id
-    const { name,icon,label,themeImageUrl } = req.body;
+    const { name,  label, themeImageUrl } = req.body;
+
+    const icon = req.files.icon as UploadedFile
 
     //const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     //const iconeCategoria = files["iconeCategoria"]?.[0].filename;
     //const urlBannerCategoria = files["urlBannerCategoria"]?.[0].filename;
 
-    const cadastroCategoria = new CadastroCategoriasService();
-    const cadastro = await cadastroCategoria.execute({
+    const categoriesRegister = new CategoriesRegisterService();
+    const responseCategoriesRegister = await categoriesRegister.execute({
       idUserOwner: id_user_logged,
       name, 
       label,
@@ -23,14 +26,11 @@ class CadastroCategoriasController {
       themeImageUrl,
     }) as IResponseCadastroCategoria;
 
-      if(cadastro.status === 403){
-        return res.status(403).json(cadastro)
-      }
-  
-      res.json(cadastro);
+
+     return res.status(responseCategoriesRegister.data.status).json(responseCategoriesRegister.data);
 
  
   }
 }
 
-export { CadastroCategoriasController };
+export { CategoriesRegisterController };

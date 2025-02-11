@@ -43,7 +43,7 @@ interface IUsersRegisterService {
   termsReceiptNews?: boolean | null
 }
 
-class UsersRegisterService {
+class UsersRegisterOtherService {
   async execute({
     id_user_logged,
     name,
@@ -80,6 +80,22 @@ class UsersRegisterService {
         },
       };
     }
+
+    const verifyValidations = validationsUserService({
+      name: name,
+      email: email,
+      cpfCnpj: cpfCnpj,
+      phone: phone,
+      birthDate: birthDate,
+      gender: gender,
+      typePerson: typePerson,
+      password: password ? password : null,
+    });
+
+    if (verifyValidations) {
+      return verifyValidations;
+    }
+
 
     const userExistsLogged = await prismaClient.users.findFirst({
       where: {
@@ -191,7 +207,7 @@ class UsersRegisterService {
           status,        
           idProfileAvatar: idProfileAvatar,
           profileAvatar: resultFile.url ? resultFile.url : null,
-          profileSocialUrl: profileSocialUrl !== null ?   profileSocialUrl : null,
+          profileSocialUrl: profileSocialUrl !== null ? profileSocialUrl : null,
           termsUsePlatform: termsUsePlatform !== null ? termsUsePlatform : true,
           termsUseLGPD: termsUseLGPD !== null ? termsUseLGPD : true,
           termsReceiptNews: termsReceiptNews !== null ? termsReceiptNews : true,
@@ -230,4 +246,4 @@ class UsersRegisterService {
   }
 }
 
-export { UsersRegisterService };
+export { UsersRegisterOtherService };

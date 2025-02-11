@@ -13,7 +13,7 @@ export const api = async ({baseURL, method, endpoint,data}: IAPI) => {
     method: method ?? "post",
     headers: {
         "Content-Type": "application/json",
-        "Authorization": process.env.P
+        "Authorization": process.env.PAGBANK_URL
     },
     body: data ?? null
   })

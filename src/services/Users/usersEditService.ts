@@ -1,15 +1,16 @@
 import { TypesAccess } from "../../keys/typeAccess/typesAccess";
 import { TypePerson } from "../../keys/typePerson/typePerson";
-import prismaClient from "../../prisma";
 import { deformatter } from "../../utils/desformatter";
 import { formatterDateToIso } from "../../utils/formatters/formatterDate";
 import { todayWithTime } from "../../utils/formatters/formatterToday";
 import { validatorPermissions } from "../../utils/validators/validatorPermissions";
 import { hash } from "bcryptjs";
 
+import prismaClient from "../../prisma";
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
-import { v6 as uuid } from "uuid";
+
 import { UploadedFile } from "express-fileupload";
+import { validationsUserService } from "../../utils/validationsServices/validationsUserService";
 
 interface IEditUserService {
   id: string;
@@ -80,6 +81,22 @@ class UsersEditService {
         },
       };
     }
+
+    const verifyValidations = validationsUserService({
+      name: name,
+      email: email,
+      cpfCnpj: cpfCnpj,
+      phone: phone,
+      birthDate: birthDate,
+      gender: gender,
+      typePerson: typePerson,
+      password: password ? password : null,
+    });
+
+    if (verifyValidations) {
+      return verifyValidations;
+    }
+
     const isUserLogged = id === id_user_logged;
 
     const userExistsLogged = await prismaClient.users.findFirst({
@@ -111,7 +128,7 @@ class UsersEditService {
     });
 
     const CPFOrCNPJ =
-      userCPFOrCNPJExists.typePerson === TypePerson.Fisic ? "CPF" : "CNPJ";
+      userCPFOrCNPJExists?.typePerson === TypePerson.Fisic ? "CPF" : "CNPJ";
 
     const validationPermission = validatorPermissions({
       typeAccess: userExistsLogged.typeAccess || "",
@@ -197,9 +214,7 @@ class UsersEditService {
       };
     }
 
-    if (
-      typeAccess &&
-      (userExistsLogged.typeAccess === TypesAccess.User ||
+    if (typeAccess && (userExistsLogged.typeAccess === TypesAccess.User ||
         userExistsLogged.typeAccess === TypesAccess.Promoter ||
         userExistsLogged.typeAccess === TypesAccess.Worker)
     ) {
@@ -262,38 +277,41 @@ class UsersEditService {
         return await prismaClient.users.update({
           where: { id: isLoggedUser ? id_user_logged : id },
           data: {
-            name: name ?? user.name,
-            email: email ?? user.email,
+            name: name ? name : null,
+            email: email ? email : null,
             password: password ? await hash(password, 8) : user.password,
-            cpfCnpj: cpfCnpj ? deformatter(cpfCnpj) : user.cpfCnpj,
-            phone: phone ? deformatter(phone) : user.phone,
+            cpfCnpj: cpfCnpj ? deformatter(cpfCnpj) : null,
+            phone: phone ? deformatter(phone) : null,
             birthDate: birthDate
               ? formatterDateToIso(birthDate)
-              : user.birthDate,
-            street: street ?? user.street,
-            complement: complement ?? user.complement,
+              : null,
+            
+            street: street ? street : null,
+            complement: complement ? complement : null,
             profileAvatar: profileAvatarUpdated, // Será atualizado pelo controller
-            profileSocialUrl: profileSocialUrl ?? user.profileSocialUrl,
-            typePerson: typePerson ?? user.typePerson,
-            neighborhood: neighborhood ?? user.neighborhood,
-            city: city ?? user.city,
-            gender: gender ?? user.gender,
-            cep: cep ? deformatter(cep) : user.cep,
-            region_code: region_code ?? user.region_code,
-            number_address: number_address ?? user.number_address,
-            termsUsePlatform: termsUsePlatform ?? user?.termsUsePlatform,
-            termsUseLGPD: termsUseLGPD ?? user?.termsUseLGPD,
-            termsReceiptNews: termsReceiptNews ?? user?.termsReceiptNews,
-            termsPrivacyPolicy: termsPrivacyPolicy ?? user?.termsPrivacyPolicy,
-            status:
-              status !== null &&
+            profileSocialUrl: profileSocialUrl ? profileSocialUrl : null,
+            typePerson: typePerson ? typePerson : null,
+            neighborhood: neighborhood ? neighborhood : null,
+            city: city ? city : null,
+           
+            gender: gender ? gender : null,
+            cep: cep ? deformatter(cep) : null,
+            region_code: region_code ? region_code : null,
+            number_address: number_address ? number_address : null,
+   
+            typeAccess: typeAccess ? typeAccess : user.typeAccess,
+
+            termsUsePlatform: termsUsePlatform !== null ? termsUsePlatform : user.termsUsePlatform,
+            termsUseLGPD: termsUseLGPD !== null ? termsUseLGPD : user.termsUseLGPD,
+            termsReceiptNews: termsReceiptNews !== null ? termsReceiptNews : user.termsReceiptNews,
+            termsPrivacyPolicy: termsPrivacyPolicy !== null ? termsPrivacyPolicy :  user.termsPrivacyPolicy,
+
+            status: status !== null &&
               userExistsLogged.typeAccess !== TypesAccess.User
                 ? status
                 : user.status,
             updated_At: todayAt,
-
-            typeAccess: typeAccess ?? user.typeAccess,
-
+        
             editedBy: userExistsLogged?.name ?? null,
             typeAccessEditedBy: userExistsLogged?.typeAccess ?? null,
             cpfEditedBy: userExistsLogged?.cpfCnpj ?? null,
@@ -313,7 +331,10 @@ class UsersEditService {
       } else {
         await updateUser(userExists);
         return {
-          data: { message: "Usuário atualizado com sucesso!", status: 200 },
+          data: {
+            message: "Usuário atualizado com sucesso!",
+            status: 200,
+          },
         };
       }
     } catch (err) {

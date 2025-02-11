@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { UsersRegisterService } from "../../services/Users/usersRegisterService";
+import { UsersRegisterOtherService } from "../../services/Users/usersRegisterOtherService";
+import { UploadedFile } from "express-fileupload";
 
 
 
-class UsersRegisterController {
+class UsersRegisterOtherController {
   async handle(req: Request, res: Response) {
     const id_user_logged = req.user_id
     const {
@@ -30,9 +31,11 @@ class UsersRegisterController {
       termsReceiptNews
     } = req.body;
 
+    
+    const profileAvatar = req.files.profileAvatar as UploadedFile
     //const profile 
-    const registerUser = new UsersRegisterService();
-    const responseRegisterUser = await registerUser.execute({
+    const usersRegisterOtherService = new UsersRegisterOtherService();
+    const responseRegisterUser = await usersRegisterOtherService.execute({
       id_user_logged,
       name,
       email,
@@ -54,7 +57,8 @@ class UsersRegisterController {
       termsUsePlatform,
       termsUseLGPD,
       termsPrivacyPolicy,
-      termsReceiptNews
+      termsReceiptNews,
+      profileAvatar
       
     });
 
@@ -64,4 +68,4 @@ class UsersRegisterController {
   }
 }
 
-export { UsersRegisterController };
+export { UsersRegisterOtherController };

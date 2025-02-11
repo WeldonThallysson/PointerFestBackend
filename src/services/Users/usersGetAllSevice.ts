@@ -61,6 +61,7 @@ class UsersGetAllService {
     page,
     limit,
   }: IGetAllUserService) {
+    
     const userExistsLogged = await prismaClient.users.findFirst({
       where: { id: id_user_logged },
     });

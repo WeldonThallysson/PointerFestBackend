@@ -25,6 +25,7 @@ export const isLogged = (req: Request, res: Response, next: NextFunction) => {
         console.log("Verificação de token concluída")
     }
     
+    
     catch(err){
         res.status(401).json({
             status: 401,

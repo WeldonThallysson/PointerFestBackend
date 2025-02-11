@@ -50,7 +50,7 @@ class UsersGetAllController {
           limit: Number(limit)
 
        })
-       return res.json(responseUsersGetAll)
+       return res.status(responseUsersGetAll.data.status).json(responseUsersGetAll.data)
     }
 
 }

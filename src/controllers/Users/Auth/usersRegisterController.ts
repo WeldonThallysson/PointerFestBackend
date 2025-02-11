@@ -4,9 +4,7 @@ import { UsersRegisterService } from "../../../services/Users/Auth/usersRegister
 
 class UsersRegisterController {
     async handle(req: Request, res: Response){
-
         const {
-            
             name,
             email,
             cpfCnpj,

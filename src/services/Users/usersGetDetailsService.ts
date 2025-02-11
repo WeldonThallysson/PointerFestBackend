@@ -11,7 +11,7 @@ interface UsuariosType {
   idUserLogged: string;
 }
 
-class UsersDetailsService {
+class UsersGetDetailsService {
   async execute({ id, idUserLogged }: UsuariosType) {
 
     if (!id) {
@@ -70,15 +70,21 @@ class UsersDetailsService {
             birthDate: true,
             phone: true,
             gender: true,
+            
             city: true,
             neighborhood: true, 
             cep: true,
-
             number_address: true,
-
             region_code: true,
+            street: true,
+            complement: true,
+
             typeAccess: true,
             typePerson: true,
+
+            profileAvatar: true,
+            profileSocialUrl: true,
+
             termsUsePlatform: true,
             termsUseLGPD: true,
             termsPrivacyPolicy: true,
@@ -138,4 +144,4 @@ class UsersDetailsService {
   }
 }
 
-export { UsersDetailsService };
+export { UsersGetDetailsService };

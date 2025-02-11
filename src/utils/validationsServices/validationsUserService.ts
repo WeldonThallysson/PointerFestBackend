@@ -76,7 +76,7 @@ export const validationsUserService = ({
   }
 
   
-  if(password.length < 8 ){
+  if(password && password?.length < 8 ){
     return {
       data: {
         message:
@@ -87,7 +87,7 @@ export const validationsUserService = ({
   }
 
   
-  if(password.length > 14 ){
+  if(password && password?.length > 14 ){
     return {
       data: {
         message:
@@ -97,11 +97,22 @@ export const validationsUserService = ({
     };
   }
 
-  if (typePerson === TypePerson.Fisic && !validatorCPF(cpfCnpj)) {
+ 
+
+  if (typePerson !== TypePerson.Fisic && typePerson !== TypePerson.Juridic) {
     return {
       data: {
         message:
-          "Não foi possível realizar está ação, CPF inválido. Deve conter 11 dígitos.",
+          "Não foi possível realizar esta ação, o tipo da pessoa deve ser Física ou Jurídica",
+        status: 400,
+      },
+    };
+  }
+
+  if (typePerson === TypePerson.Fisic && !validatorCPF(cpfCnpj)) {
+    return {
+      data: {
+        message: "Não foi possível realizar está ação, CPF inválido. Deve conter 11 dígitos.",
         status: 400,
       },
     };
@@ -110,8 +121,7 @@ export const validationsUserService = ({
   if (typePerson === TypePerson.Juridic && !validatorCNPJ(cpfCnpj)) {
     return {
       data: {
-        message:
-          "Não foi possível realizar está ação, CNPJ inválido. Deve conter 14 dígitos.",
+        message: "Não foi possível realizar está ação, CNPJ inválido. Deve conter 14 dígitos.",
         status: 400,
       },
     };
