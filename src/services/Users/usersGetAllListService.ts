@@ -10,9 +10,8 @@ import { validatorPermissions } from "../../utils/validators/validatorPermission
 import prismaClient from "../../prisma";
 import { TypePerson } from "../../keys/typePerson/typePerson";
 import { formatterCNPJ } from "../../utils/formatters/formatterCNPJ";
-import { deformatter } from "../../utils/desformatter";
-
-interface IGetListUserService {
+ 
+interface IUsersGetAllListService {
   id_user_logged: string;
   idOtherUser: string | null;
   name?: string | null;
@@ -50,7 +49,7 @@ class UsersGetAllListService {
     cep,
     typeAccess,
     status,
-  }: IGetListUserService) {
+  }: IUsersGetAllListService) {
     
     const userExistsLogged = await prismaClient.users.findFirst({
       where: { id: id_user_logged },

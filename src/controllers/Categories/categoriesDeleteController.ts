@@ -1,5 +1,5 @@
 import { Response,Request } from "express";
-import { DeletarCategoriasIdService } from "../../services/Categories/deletarCategoriasIdService";
+import { DeletarCategoriasIdService } from "../../services/Categories/categoriesDeleteService";
 
 class CategoriesDeleteController {
     async handle(req:Request,res: Response){

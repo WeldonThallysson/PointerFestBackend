@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
-import { EditarCategoriasService } from "../../services/Categories/editarCategoriasService";
+import { CategoriesEditService } from "../../services/Categories/categoriesEditService";
 import { UploadedFile } from "express-fileupload";
 
 class CategoriesEditController {
   async handle(req: Request, res: Response) {
     const { 
       id, 
+      idUserOwner,
       name, 
       label,
       themeImageUrl,
@@ -19,6 +20,7 @@ class CategoriesEditController {
     const categoriesEditController = new CategoriesEditService();
     const responseCategoriesEditController = await categoriesEditController.execute({
       id,
+      idUserOwner,
       name, 
       label,
       icon,

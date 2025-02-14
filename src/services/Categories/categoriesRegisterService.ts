@@ -1,8 +1,9 @@
 import { UploadedFile } from "express-fileupload";
 import prismaClient from "../../prisma";
 import { validationsCategoriesService } from "../../utils/validationsServices/validationsCategories";
-
-interface CadastroCategoriaType {
+import {v2 as cloudinary, UploadApiResponse} from 'cloudinary'
+import {v6 as uuid} from 'uuid'
+interface ICategoriesRegister {
   idUserOwner: string;
   name: string;
   label?: string | null;
@@ -17,7 +18,7 @@ class CategoriesRegisterService {
     label,
     icon,
     themeImageUrl,
-  }: CadastroCategoriaType) {
+  }: ICategoriesRegister) {
     const validationsCategories = validationsCategoriesService({
       idUserOwner,
       name,
@@ -43,12 +44,33 @@ class CategoriesRegisterService {
     }
 
     try {
+      const iconId = uuid()
+
+      const resultFile: UploadApiResponse = await new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream({
+            public_id: `icons/${iconId}`,
+            folder: "icons"
+          }, (err,result) => {
+            if(err){
+              return {
+                data: {
+                message: err,
+                status:500 
+              
+                }
+              }
+            }
+            resolve(result)
+          }).end(icon.data)
+
+      })
+
       await prismaClient.categories.create({
         data: {
           idUserOwner: idUserOwner,
           name: name,
           label: label ? label : null,
-          icon: "", // aqui vai um icone url gerada pelo cloudinary
+          icon: resultFile.url ? resultFile.url : null, // aqui vai um icone url gerada pelo cloudinary
           themeImageUrl: themeImageUrl ? themeImageUrl : null,
         },
       });

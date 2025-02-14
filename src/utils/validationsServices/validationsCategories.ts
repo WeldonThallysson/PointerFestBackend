@@ -7,6 +7,7 @@ interface IParamsCategoriesService {
 }
 
 export const validationsCategoriesService = ({
+
   name,
   icon,
   idUserOwner,
@@ -20,7 +21,7 @@ export const validationsCategoriesService = ({
       },
     };
   }
-
+ 
   if (!name) {
     return {
       data: {

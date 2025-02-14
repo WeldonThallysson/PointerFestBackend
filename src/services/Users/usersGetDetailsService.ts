@@ -6,13 +6,13 @@ import { formatterCNPJ } from "../../utils/formatters/formatterCNPJ";
 import { formatterCPF } from "../../utils/formatters/formatterCPF";
 import { formatterDateToIso } from "../../utils/formatters/formatterDate";
 
-interface UsuariosType {
+interface IUsersGetDetailsService {
   id: string;
   idUserLogged: string;
 }
 
 class UsersGetDetailsService {
-  async execute({ id, idUserLogged }: UsuariosType) {
+  async execute({ id, idUserLogged }: IUsersGetDetailsService) {
 
     if (!id) {
         return {

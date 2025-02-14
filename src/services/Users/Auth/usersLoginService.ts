@@ -2,13 +2,13 @@ import prismaClient from "../../../prisma";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
-interface loginUsuarioType {
+interface IUsersLoginService {
   account: string;
   password: string;
 }
 
 class UsersLoginService {
-  async execute({ account, password }: loginUsuarioType) {
+  async execute({ account, password }: IUsersLoginService) {
     if (!account) {
       return {
         data: {

@@ -2,13 +2,13 @@ import { TypesAccess } from "../../keys/typeAccess/typesAccess";
 import prismaClient from "../../prisma";
 import { validatorPermissions } from "../../utils/validators/validatorPermissions";
 
-interface DeletarUsuariosType {
+interface IUsersDeleteService {
   id: string;
   id_user_logged: string;
 }
 
 class UsersDeleteService {
-  async execute({ id, id_user_logged }: DeletarUsuariosType) {
+  async execute({ id, id_user_logged }: IUsersDeleteService) {
     if (!id) {
       return {
         data: {

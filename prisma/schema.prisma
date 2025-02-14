@@ -10,17 +10,17 @@ datasource db {
 }
 
 model Users {
-  id     String  @id @default(uuid())
-  idPlan String?
-  idProfileAvatar  String?
-  name       String
-  email      String
-  password   String
-  cpfCnpj    String
-  typePerson String @default("PF") // Pode ser "PF" ou "PJ"
-  birthDate  String
-  phone      String
-  gender     String
+  id              String  @id @default(uuid())
+  idPlan          String?
+  idProfileAvatar String?
+  name            String
+  email           String
+  password        String
+  cpfCnpj         String
+  typePerson      String  @default("PF") // Pode ser "PF" ou "PJ"
+  birthDate       String
+  phone           String
+  gender          String
 
   complement     String?
   street         String?
@@ -30,9 +30,9 @@ model Users {
   number_address String?
   neighborhood   String?
 
-  typeAccess          String  @default("client")
-  profileAvatar       String?
-  profileSocialUrl    String?
+  typeAccess       String  @default("client")
+  profileAvatar    String?
+  profileSocialUrl String?
 
   tutorialFirstAccess Boolean @default(true)
 
@@ -77,8 +77,6 @@ model Users {
 
   couponUsage CouponUsage[]
 
-  recycleBins Bin[]
-
   @@map("users")
 }
 
@@ -103,7 +101,6 @@ model Plan {
   // Quem já adquiriu o plano (usuários assinantes)
   usersWhoSubscribed Users[]
   coupon             Coupon[]
-  recycleBins        Bin[]
 
   @@map("plans")
 }
@@ -114,14 +111,14 @@ model Categories {
 
   name          String
   label         String?
+  idIcon        String?
   icon          String?
   themeImageUrl String
 
-  created_At  DateTime  @default(now())
-  updated_At  DateTime?
-  events      Events[]
-  recycleBins Bin[]
-  userOwner   Users     @relation(fields: [idUserOwner], references: [id])
+  created_At DateTime  @default(now())
+  updated_At DateTime?
+  events     Events[]
+  userOwner  Users     @relation(fields: [idUserOwner], references: [id])
 
   @@map("categories")
 }
@@ -141,7 +138,6 @@ model Commercials {
   updated_At       DateTime?
   Users            Users            @relation(fields: [idUserOwner], references: [id])
   TypesCommercials TypesCommercials @relation(fields: [idTypeCommercial], references: [id])
-  recycleBins      Bin[]
 
   @@map("Commercials")
 }
@@ -157,7 +153,6 @@ model TypesCommercials {
   updated_At  DateTime?
   Users       Users         @relation(fields: [idUserOwner], references: [id])
   Commercials Commercials[]
-  recycleBins Bin[]
 
   @@map("typesCommercials")
 }
@@ -188,7 +183,6 @@ model Products {
 
   events        Events[]
   purchases     Purchases[]
-  recycleBins   Bin[]
   Coupon        Coupon[]
   userOwner     Users?        @relation(fields: [idUserOwner], references: [id])
   typesProducts TypesProducts @relation(fields: [idTypeProduct], references: [id])
@@ -206,9 +200,8 @@ model TypesProducts {
   created_At DateTime? @default(now())
   updated_At DateTime?
 
-  Users       Users      @relation(fields: [idUserOwner], references: [id])
-  products    Products[]
-  recycleBins Bin[]
+  Users    Users      @relation(fields: [idUserOwner], references: [id])
+  products Products[]
 
   @@map("typesProducts")
 }
@@ -241,8 +234,6 @@ model Events {
   created_At DateTime  @default(now())
   updated_At DateTime?
 
-  recycleBins Bin[]
-
   @@map("events")
 }
 
@@ -272,7 +263,6 @@ model Coupon {
   updated_At DateTime?
 
   couponUsage CouponUsage[]
-  Bin         Bin[]
 
   @@map("coupon")
 }
@@ -304,7 +294,6 @@ model MethodsPayments {
   purchases         Purchases[]
   Users             Users       @relation(fields: [idUserOwner], references: [id])
   status            Boolean     @default(true)
-  Bin               Bin[]
 
   @@map("methodspayments")
 }
@@ -329,39 +318,17 @@ model Purchases {
   methodsPayments MethodsPayments @relation(fields: [idMethodPayment], references: [id])
   product         Products?       @relation(fields: [idProduct], references: [id])
   plan            Plan?           @relation(fields: [idPlan], references: [id])
-  Bin             Bin[]
 
   @@map("purchases")
 }
 
 model Bin {
-  id                String  @id @default(uuid())
-  idPurchase        String?
-  idMethodsPayments String?
-  idCommercials     String?
-  idTypeComercials  String?
-  idPlan            String?
-  idCoupon          String?
-  idUser            String?
-  idEvent           String?
-  idCategory        String?
-  idProduct         String?
-  idTypesProducts   String?
-
+  id         String    @id @default(uuid())
+  tableName  String
+  itemId     String
+  data       Json
   created_At DateTime  @default(now())
   updated_At DateTime?
-
-  plan             Plan?             @relation(fields: [idPlan], references: [id])
-  coupon           Coupon?           @relation(fields: [idCoupon], references: [id])
-  categories       Categories?       @relation(fields: [idCategory], references: [id])
-  events           Events?           @relation(fields: [idEvent], references: [id])
-  products         Products?         @relation(fields: [idProduct], references: [id])
-  typesProducts    TypesProducts?    @relation(fields: [idTypesProducts], references: [id])
-  users            Users?            @relation(fields: [idUser], references: [id])
-  typesCommercials TypesCommercials? @relation(fields: [idTypeComercials], references: [id])
-  commercials      Commercials?      @relation(fields: [idCommercials], references: [id])
-  purchases        Purchases?        @relation(fields: [idPurchase], references: [id])
-  methodsPayments  MethodsPayments?  @relation(fields: [idMethodsPayments], references: [id])
 
   @@map("bin")
 }

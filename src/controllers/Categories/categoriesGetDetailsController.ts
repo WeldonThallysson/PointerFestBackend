@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ListagemCategoriasIdService } from "../../services/Categories/listagemCategoriasIdService";
+import { CategoriesGetDetailsService,  } from "../../services/Categories/categoriesGetDetailsService";
 
 
 class CategoriesGetDetailsController {
