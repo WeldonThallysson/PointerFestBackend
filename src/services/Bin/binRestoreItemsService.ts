@@ -2,9 +2,9 @@ import prismaClient from "../../prisma";
 
 interface IBinRestoreItemsService {
     id?: string | null;
+    idUserOwner?: string | null;
 
 }
-
 
 class BinRestoreItemsService {
     async execute({id}: IBinRestoreItemsService){
@@ -39,8 +39,11 @@ class BinRestoreItemsService {
                 });
 
                 return {
-                    message: "Item restaurado com sucesso",
-                    status: 200
+                    data: {
+                        message: "Item restaurado com sucesso",
+                        status: 200
+                    }
+                  
                 };
         }
         catch(err){

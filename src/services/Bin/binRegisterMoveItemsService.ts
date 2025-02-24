@@ -4,11 +4,20 @@ import prismaClient from "../../prisma";
 
 interface IBinRegisterItemsService {
     id: string;
+    idUserOwner: string;
     tableName: string;
 }
 
 class BinRegisterItemsService {
-    async execute({id, tableName}: IBinRegisterItemsService){
+    async execute({id, idUserOwner, tableName}: IBinRegisterItemsService){
+        if(!idUserOwner){
+            return {
+                data :{
+                    message: "Não foi possível prosseguir com está ação, Informe o ID do responsável",
+                    status:400
+                }
+            }
+        }
 
         if((!id || !tableName)){
             return {
@@ -27,14 +36,18 @@ class BinRegisterItemsService {
                 data: {
                   tableName,
                   itemId: id,
+                  idUserOwner: idUserOwner,
                   data: JSON.stringify(item)   
                 }
             })
             await prismaClient.$executeRawUnsafe(`DELETE FROM ${tableName} WHERE id = '${id}'`)
 
-
             return {
-                message: `Item movido para a lixeira`
+                data: {
+                   message: `Item movido para a lixeira com sucesso`,
+                   status: 200
+                }
+         
             }
         } catch(err){
             return {

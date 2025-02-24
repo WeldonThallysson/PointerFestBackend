@@ -1,5 +1,5 @@
 import prismaClient from "../../prisma";
-
+import { BinRegisterItemsService } from "../Bin/binRegisterMoveItemsService";
 interface DeletarCategoriasType {
     id: string
 
@@ -17,15 +17,32 @@ class DeletarCategoriasIdService{
             }
         }
 
+        const categoriesExists = await prismaClient.categories.findFirst({where: {id: id}})
 
-        const deletarCategoriasId = await prismaClient.categories.delete({
-            where: {
-                id: id
+        if(!categoriesExists){
+            return {
+                data: {
+                    message: "Não foi possível prosseguir com esta ação, essa categoria não existe",
+                    status: 404
+                }
             }
-        })
+        }
 
-        return deletarCategoriasId
-    }
+
+        const binRegisterItemsService = new BinRegisterItemsService() 
+
+        const deletarCategoriasId = await binRegisterItemsService.execute({
+            id: id,
+            tableName: "categories"
+        })  
+
+        return {
+            data: {
+                message: deletarCategoriasId.data.message,
+                status: deletarCategoriasId.data.status
+            }
+        }   
+     }
 
 }
 

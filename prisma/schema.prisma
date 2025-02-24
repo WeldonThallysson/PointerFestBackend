@@ -324,6 +324,7 @@ model Purchases {
 
 model Bin {
   id         String    @id @default(uuid())
+  idUserOwner String?
   tableName  String
   itemId     String
   data       Json
