@@ -113,7 +113,8 @@ model Categories {
   label         String?
   idIcon        String?
   icon          String?
-  themeImageUrl String
+  idThemeImageUrl String?
+  themeImageUrl String?
 
   created_At DateTime  @default(now())
   updated_At DateTime?
@@ -129,6 +130,7 @@ model Commercials {
   idTypeCommercial         String
   name                     String
   description              String?
+  idUrlImageCommercial     String?
   urlImageCommercial       String
   urlSocialMediaCommercial String?
   positionOrder            Int?

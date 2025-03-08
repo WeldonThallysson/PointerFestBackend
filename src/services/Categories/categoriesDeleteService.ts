@@ -1,11 +1,10 @@
 import prismaClient from "../../prisma";
-import { BinRegisterItemsService } from "../Bin/binRegisterMoveItemsService";
+import { BinRegisterMoveItemsService } from "../Bin/binRegisterMoveItemsService";
 interface DeletarCategoriasType {
     id: string
-
 }
 
-class DeletarCategoriasIdService{
+class CategoriesDeleteService{
     async execute({id}: DeletarCategoriasType){
 
         if(!id){
@@ -28,12 +27,12 @@ class DeletarCategoriasIdService{
             }
         }
 
-
-        const binRegisterItemsService = new BinRegisterItemsService() 
+        const binRegisterItemsService = new BinRegisterMoveItemsService() 
 
         const deletarCategoriasId = await binRegisterItemsService.execute({
             id: id,
-            tableName: "categories"
+            tableName: "categories",
+            idUserOwner: categoriesExists.idUserOwner
         })  
 
         return {
@@ -46,4 +45,4 @@ class DeletarCategoriasIdService{
 
 }
 
-export {DeletarCategoriasIdService}
+export {CategoriesDeleteService}

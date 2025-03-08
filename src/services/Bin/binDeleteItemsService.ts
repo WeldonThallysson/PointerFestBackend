@@ -2,20 +2,23 @@ import prismaClient from "../../prisma";
 
 interface IBinDeleteItemsService {
   id?: string | null;
+  idUserOwner?: string | null;
 }
 
 class BinDeleteItemsService {
   async execute({ id }: IBinDeleteItemsService) {
     if (!id) {
       return {
-        message: "Informe o ID do item na lixeira",
-        status: 400,
+        data: {
+          message: "Informe o ID do item na lixeira",
+          status: 400,
+        }
       };
     }
 
     const itemBinExists = await prismaClient.bin.findUnique({
       where: {
-        id: id,
+        id: id, 
       },
     });
 

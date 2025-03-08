@@ -35,6 +35,12 @@ import { AllowAccessUserController } from "./controllers/Users/Permissions/allow
 import { AllowUpdateTutorialFirstAccessController } from "./controllers/Users/Permissions/allowUpdateTutorialFirstAccessController";
 import { AllowUpdateTermsController } from "./controllers/Users/Permissions/allowUpdateTermsController";
 import { UsersRegisterOtherController } from "./controllers/Users/usersRegisterController";
+import { BinDeleteItemsController } from "./controllers/Bin/binDeleteItemsController";
+import { BinEditItemsController } from "./controllers/Bin/binEditItemsController";
+import { BinRegisterMoveItemsController } from "./controllers/Bin/binRegisterMoveItemsController";
+import { BinGetDetailsItemsController } from "./controllers/Bin/binGetDetailsItemsController";
+import { BinGetAllItemsController } from "./controllers/Bin/binGetAllItemsController";
+import { BinRestoreItemsController } from "./controllers/Bin/binRestoreItemsController";
 
 const router = Router()
 
@@ -68,7 +74,16 @@ router.put("/users/permissions", isLogged, new AllowAccessUserController().handl
 router.put("/users/firstAcess", isLogged, new AllowUpdateTutorialFirstAccessController().handle)
  
 router.put("/users/terms", isLogged, new AllowUpdateTermsController().handle);//atualiza
-// endpoint para cadastrar uma conta cliente normal
+
+// endpoint para a lixeira
+router.post("/bin", isLogged, new BinRegisterMoveItemsController().handle);
+router.get("/bin/:id", isLogged, new BinRestoreItemsController().handle)
+router.put("/bin", isLogged, new BinEditItemsController().handle);
+router.get("/bin", isLogged, new BinGetAllItemsController().handle);
+router.get("/bin", isLogged, new BinGetDetailsItemsController().handle);
+router.delete("/bin/:id", isLogged, new BinDeleteItemsController().handle);
+
+
 // rotas para cadastrar categorias 
 router.post("/categories", isLogged, new CategoriesRegisterController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
 router.get("/categories", isLogged, new ListagemTodasCategoriasController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario )

@@ -10,7 +10,7 @@ class BinGetDetailsItemsService {
     const where: any = null;
 
     if (id) where.id = { contains: id, mode: "insensitive" };
-    if (idUserOwner) where.idUserOwner = { contains: id, mode: "insensitive" };
+    if (idUserOwner) where.idUserOwner = { contains: idUserOwner, mode: "insensitive" };
 
     const userExists = await prismaClient.users.findFirst({
       where: {

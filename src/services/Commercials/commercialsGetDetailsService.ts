@@ -1,19 +1,19 @@
 import prismaClient from "../../prisma";
 
-interface ICategoriesGetDetailsService {
+interface ICommercialGetDetailsService {
     id: string
     idUserOwner?: string | null
 }
 
-class CategoriesGetDetailsService {
+class CommercialGetDetailsService {
     async execute({
         id,
         idUserOwner
-    }: ICategoriesGetDetailsService){
+    }: ICommercialGetDetailsService){
         if(!id){
             return {
                 data: {
-                    message: "Não foi possível prosseguir com esta ação, por favor envio o id da categoria para prosseguir",
+                    message: "Não foi possível prosseguir com esta ação, por favor envio o id do comercial para prosseguir",
                     status: 400
                 }
             }
@@ -34,7 +34,7 @@ class CategoriesGetDetailsService {
             }
         })
 
-        const categoryExists = await prismaClient.categories.findFirst({
+        const commercialExists = await prismaClient.commercials.findFirst({
             where: {
                 id: id,
                 idUserOwner: idUserOwner
@@ -50,10 +50,10 @@ class CategoriesGetDetailsService {
             }
         }
 
-        if(!categoryExists){
+        if(!commercialExists){
             return {
                 data: {
-                    message: "Não foi possível prosseguir com esta ação, essa categoria não existe",
+                    message: "Não foi possível prosseguir com esta ação, esse comercial não existe",
                     status: 404
                 }
             }
@@ -61,7 +61,7 @@ class CategoriesGetDetailsService {
 
         return {
             data: {
-                item: categoryExists,
+                item: commercialExists,
                 status: 200
             }
         }
@@ -69,4 +69,4 @@ class CategoriesGetDetailsService {
     }
 }
 
-export {CategoriesGetDetailsService}
+export {CommercialGetDetailsService}

@@ -9,13 +9,13 @@ class CategoriesEditController {
       idUserOwner,
       name, 
       label,
-      themeImageUrl,
     } = req.body;
 
     //const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     //const iconeCategoria = files["iconeCategoria"]?.[0].filename;
     //const urlBannerCategoria = files["urlBannerCategoria"]?.[0]?.filename;
     const icon = req.files.icon as UploadedFile
+    const themeImageUrl = req.files.themeImageUrl as UploadedFile
 
     const categoriesEditController = new CategoriesEditService();
     const responseCategoriesEditController = await categoriesEditController.execute({
@@ -25,8 +25,7 @@ class CategoriesEditController {
       label,
       icon,
       themeImageUrl,
-      //iconeCategoria,
-      //urlBannerCategoria,
+ 
     });
 
     return res.status(responseCategoriesEditController.data.status).json(responseCategoriesEditController.data);

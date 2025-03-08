@@ -2,7 +2,6 @@ import prismaClient from "../../prisma";
 
 interface IBinRestoreItemsService {
     id?: string | null;
-    idUserOwner?: string | null;
 
 }
 

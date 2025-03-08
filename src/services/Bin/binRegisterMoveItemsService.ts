@@ -8,7 +8,7 @@ interface IBinRegisterItemsService {
     tableName: string;
 }
 
-class BinRegisterItemsService {
+class BinRegisterMoveItemsService {
     async execute({id, idUserOwner, tableName}: IBinRegisterItemsService){
         if(!idUserOwner){
             return {
@@ -62,4 +62,4 @@ class BinRegisterItemsService {
 
 }
 
-export {BinRegisterItemsService}
+export {BinRegisterMoveItemsService}

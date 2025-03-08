@@ -1,25 +1,25 @@
 import prismaClient from "../../prisma";
 
-interface ICategoriesGetAllService {
+interface ICommercialGetAllService {
   name?: string | null;
-  label?: string | null;
+  description?: string | null;
   page?: number | null;
   limit?: number | null;
 }
 
-class CategoriesGetAllService {
-  async execute({ name, label,page, limit }: ICategoriesGetAllService) {
+class CommercialGetAllService {
+  async execute({ name, description,page, limit }: ICommercialGetAllService) {
     const where: any = "";
 
     if (name) where.name = { contains: name, mode: "insensitive" };
-    if (label) where.label = { contains: label, mode: "insensitive" };
+    if (description) where.description = { contains: description, mode: "insensitive" };
 
 
    const shouldPaginate = page !== undefined || limit !== undefined;
    const skip = shouldPaginate ? ((page ?? 1) - 1) * (limit ?? 10) : undefined;
    const take = shouldPaginate ? limit ?? 10 : undefined
 
-    const categories = await prismaClient.categories.findMany({
+    const commercials = await prismaClient.commercials.findMany({
       where,
       skip,
       take,
@@ -27,12 +27,12 @@ class CategoriesGetAllService {
   
     });
 
-    const totalCategories = await prismaClient.categories.count()
-    const totalPages = shouldPaginate ? Math.ceil(totalCategories / (limit ?? 10)) : 1
+    const totalCommercials = await prismaClient.commercials.count()
+    const totalPages = shouldPaginate ? Math.ceil(totalCommercials / (limit ?? 10)) : 1
 
     return {
-      items: categories,
-      totalItems: totalCategories,
+      items: commercials,
+      totalItems: totalCommercials,
       totalPages: totalPages,
       currentPage: shouldPaginate ? page ?? 1 : 1,
       status: 200,
@@ -42,4 +42,4 @@ class CategoriesGetAllService {
    }
 }
 
-export { CategoriesGetAllService };
+export { CommercialGetAllService };
