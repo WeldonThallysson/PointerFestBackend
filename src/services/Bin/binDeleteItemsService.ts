@@ -1,3 +1,4 @@
+import { MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
 
 interface IBinDeleteItemsService {
@@ -41,7 +42,7 @@ class BinDeleteItemsService {
       };
     } catch (err) {
       return {
-        message: `Ocorreu um erro na restauração do item: ${err}`,
+        message: `${MessagesError.DeleteMessageError} ${err}`,
         status: 500,
       };
     }

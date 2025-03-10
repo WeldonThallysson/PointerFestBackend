@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import { CadastroProdutoService } from "../../services/Products/cadastroProdutoService";
+import { CadastroProdutoService } from "../../services/Products/productsRegisterService";
 
 
 class CadastroProdutoController {

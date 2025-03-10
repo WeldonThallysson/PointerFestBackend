@@ -26,7 +26,7 @@ export const validationsCommercialsService = ({
   if (!name) {
     return {
       data: {
-        message: "Não foi possível realizar está ação, Preencha o nome da categoria.", 
+        message: "Não foi possível realizar está ação, Preencha o nome do comercial.", 
         status: 400,
       },
     };

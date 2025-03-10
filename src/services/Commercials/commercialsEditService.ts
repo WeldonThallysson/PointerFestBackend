@@ -2,6 +2,8 @@ import prismaClient from "../../prisma";
 import { UploadedFile } from "express-fileupload"; 
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import { validationsCommercialsService } from "../../utils/validationsServices/validationsCommercials";
+import { TypesAccess } from "../../keys/typeAccess/typesAccess";
+import { Messages, MessagesError } from "../../constants/messages.api";
 
 interface ICommercialsEditService {
   id: string;
@@ -12,6 +14,7 @@ interface ICommercialsEditService {
   urlImageCommercial: UploadedFile | null;
   urlSocialMediaCommercial: string;
   positionOrder: number;
+  status?: boolean | null
 }
 
 class CommercialsEditService {
@@ -24,6 +27,7 @@ class CommercialsEditService {
     idTypeCommercial,
     urlImageCommercial,
     urlSocialMediaCommercial,
+    status
   }: ICommercialsEditService) {
 
     if(!id){
@@ -64,6 +68,14 @@ class CommercialsEditService {
       }
     });
 
+    if(status !== null && (userExists.typeAccess === TypesAccess.Worker || userExists.typeAccess === TypesAccess.User || userExists.typeAccess === TypesAccess.Promoter)){
+        return {
+            data: {
+                message: "Não foi possível prosseguir com esta ação, você não tem permissão para alterar o status do comercial",
+                status: 403,
+              },  
+        }
+    }
     if (!commercialsExists) {
         return {
           data: {
@@ -139,14 +151,14 @@ class CommercialsEditService {
 
       return {
         data: {
-          message: "Comercial atualizado com sucesso",
+          message: Messages.UpdateMessageSuccess,
           status: 200,
         },
       };
     } catch (err) {
       return {
         data: {
-          message: `Ocorreu um error durante a atualização do comercial ${err}`,
+          message: `${MessagesError.UpdateMessageError} ${err}`,
           status: 500,
         },
       };

@@ -1,19 +1,19 @@
 import { MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
 
-interface ICommercialGetDetailsService {
+interface ITypeCommercialGetDetailsService {
   id: string;
   idUserOwner?: string | null;
 }
 
-class CommercialGetDetailsService {
-  async execute({ id, idUserOwner }: ICommercialGetDetailsService) {
+class TypeCommercialGetDetailsService {
+  async execute({ id, idUserOwner }: ITypeCommercialGetDetailsService) {
     try {
       if (!id) {
         return {
           data: {
             message:
-              "Não foi possível prosseguir com esta ação, por favor envio o id do comercial para prosseguir",
+              "Não foi possível prosseguir com esta ação, por favor envio o id do tipo do comercial para prosseguir",
             status: 400,
           },
         };
@@ -35,12 +35,13 @@ class CommercialGetDetailsService {
         },
       });
 
-      const commercialExists = await prismaClient.commercials.findFirst({
-        where: {
-          id: id,
-          idUserOwner: idUserOwner,
-        },
-      });
+      const typeCommercialExists =
+        await prismaClient.typesCommercials.findFirst({
+          where: {
+            id: id,
+            idUserOwner: idUserOwner,
+          },
+        });
 
       if (!userExists) {
         return {
@@ -52,11 +53,11 @@ class CommercialGetDetailsService {
         };
       }
 
-      if (!commercialExists) {
+      if (!typeCommercialExists) {
         return {
           data: {
             message:
-              "Não foi possível prosseguir com esta ação, esse comercial não existe",
+              "Não foi possível prosseguir com esta ação, esse tipo do comercial não existe",
             status: 404,
           },
         };
@@ -64,7 +65,7 @@ class CommercialGetDetailsService {
 
       return {
         data: {
-          item: commercialExists,
+          item: typeCommercialExists,
           status: 200,
         },
       };
@@ -79,4 +80,4 @@ class CommercialGetDetailsService {
   }
 }
 
-export { CommercialGetDetailsService };
+export { TypeCommercialGetDetailsService };

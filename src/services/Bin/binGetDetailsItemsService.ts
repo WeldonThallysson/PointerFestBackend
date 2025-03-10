@@ -1,3 +1,4 @@
+import { MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
 
 interface IBinGetDetailsItemsService {
@@ -52,7 +53,7 @@ class BinGetDetailsItemsService {
     } catch (err) {
       return {
         data: {
-          message: `Erro na busca pelos detalhes do item na lixeira ${err}`,
+          message: `${MessagesError.GetDetailsMessageError} ${err}`,
           status: 500,
         },
       };

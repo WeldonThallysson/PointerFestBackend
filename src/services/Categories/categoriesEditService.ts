@@ -2,6 +2,7 @@ import prismaClient from "../../prisma";
 import { validationsCategoriesService } from "../../utils/validationsServices/validationsCategories";
 import { UploadedFile } from "express-fileupload";
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
+import { Messages, MessagesError } from "../../constants/messages.api";
 
 interface ICategoriesEditService {
   id: string;
@@ -129,14 +130,14 @@ class CategoriesEditService {
 
       return {
         data: {
-          message: "Categoria atualizada com sucesso",
+          message: Messages.UpdateMessageSuccess,
           status: 500,
         },
       };
     } catch (err) {
       return {
         data: {
-          message: `Ocorreu um error ao tentar atualizar a categoria, erro:${err}`,
+          message: `${MessagesError.UpdateMessageError} ${err}`,
           status: 500,
         },
       };

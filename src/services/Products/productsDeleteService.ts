@@ -2,16 +2,16 @@ import { Messages, MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
 import { BinRegisterMoveItemsService } from "../Bin/binRegisterMoveItemsService";
 
-interface ICommercialsDeleteService {
+interface IProductsDeleteService {
   id: string;
   idUserOwner: string;
 }
 
-class CommercialsDeleteService {
+class ProductsDeleteService {
   async execute({
     id,
     idUserOwner,
-  }: ICommercialsDeleteService) {
+  }: IProductsDeleteService) {
     if(!id){
         return {
             data: {
@@ -37,7 +37,7 @@ class CommercialsDeleteService {
     });
 
 
-    const commercialsExists = await prismaClient.commercials.findFirst({
+    const commercialsExists = await prismaClient.products.findFirst({
       where: {
         id: id,
         idUserOwner: idUserOwner,
@@ -47,7 +47,7 @@ class CommercialsDeleteService {
     if (!commercialsExists) {
       return {
         data: {
-          message: "Não foi possível prosseguir com esta ação, este comercial não existe",
+          message: "Não foi possível prosseguir com esta ação, este produto não existe",
           status: 403,
         },
       };
@@ -89,4 +89,4 @@ class CommercialsDeleteService {
   }
 }
 
-export { CommercialsDeleteService };
+export { ProductsDeleteService };

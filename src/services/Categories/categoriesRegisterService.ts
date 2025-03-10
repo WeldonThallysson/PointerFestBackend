@@ -3,6 +3,7 @@ import prismaClient from "../../prisma";
 import { validationsCategoriesService } from "../../utils/validationsServices/validationsCategories";
 import {v2 as cloudinary, UploadApiResponse} from 'cloudinary'
 import {v6 as uuid} from 'uuid'
+import { Messages, MessagesError } from "../../constants/messages.api";
  
 interface ICategoriesRegister {
   idUserOwner: string;
@@ -116,7 +117,7 @@ class CategoriesRegisterService {
 
       return {
         data: {
-          message: "Categoria cadastrada com sucesso",
+          message: Messages.RegisterMessageSuccess,
           status: 200,
         },
       };
@@ -124,7 +125,7 @@ class CategoriesRegisterService {
     } catch (err) {
       return {
         data: {
-          message: `Ocorreu um error durante o cadastro da categoria ${err}`,
+          message: `${MessagesError.RegisterMessageError} ${err}`,
           status: 500,
       }};
     }

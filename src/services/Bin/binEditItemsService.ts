@@ -1,3 +1,4 @@
+import { Messages, MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
 
 interface IBinEditItemsService {
@@ -74,14 +75,14 @@ class BinEditItemsService {
 
       return {
         data: {
-          message: `Item atualizado com sucesso`,
+          message: Messages.UpdateMessageSuccess,
           status: 200,
         },
       };
     } catch (err) {
       return {
         data: {
-          message: `Ocorreu um erro ao atualizar item da lixeira ${err}`,
+          message: `${MessagesError.UpdateMessageError} ${err}`,
           status: 500,
         },
       };

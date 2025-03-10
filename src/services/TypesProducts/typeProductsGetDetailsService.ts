@@ -1,22 +1,21 @@
 import { MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
 
-interface ICategoriesGetDetailsService {
+interface ITypeProductsGetDetailsService {
     id: string
     idUserOwner?: string | null
 }
 
-class CategoriesGetDetailsService {
+class TypeProductsGetDetailsService {
     async execute({
         id,
         idUserOwner
-    }: ICategoriesGetDetailsService){
-        try {   
-
+    }: ITypeProductsGetDetailsService){
+        try {
             if(!id){
                 return {
                     data: {
-                        message: "Não foi possível prosseguir com esta ação, por favor envio o id da categoria para prosseguir",
+                        message: "Não foi possível prosseguir com esta ação, por favor envio o id do tipo do comercial para prosseguir",
                         status: 400
                     }
                 }
@@ -37,7 +36,7 @@ class CategoriesGetDetailsService {
                 }
             })
     
-            const categoryExists = await prismaClient.categories.findFirst({
+            const typeProductsExists = await prismaClient.typesProducts.findFirst({
                 where: {
                     id: id,
                     idUserOwner: idUserOwner
@@ -53,10 +52,10 @@ class CategoriesGetDetailsService {
                 }
             }
     
-            if(!categoryExists){
+            if(!typeProductsExists){
                 return {
                     data: {
-                        message: "Não foi possível prosseguir com esta ação, essa categoria não existe",
+                        message: "Não foi possível prosseguir com esta ação, esse tipo do produto não existe",
                         status: 404
                     }
                 }
@@ -64,22 +63,22 @@ class CategoriesGetDetailsService {
     
             return {
                 data: {
-                    item: categoryExists,
+                    item: typeProductsExists,
                     status: 200
                 }
             }
+           
 
-        } catch(err){
-           return {
-            data: {
-              message: `${MessagesError.GetDetailsMessageError} ${err}`,
-              status: 500,
-            },
-          };
+        } catch (err) {
+            return {
+                data: {
+                  message: `${MessagesError.GetDetailsMessageError} ${err}`,
+                  status: 500,
+                },
+              };
         }
-      
-       
+     
     }
 }
 
-export {CategoriesGetDetailsService}
+export {TypeProductsGetDetailsService}

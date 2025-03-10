@@ -148,7 +148,7 @@ model TypesCommercials {
   id          String @id @default(uuid())
   idUserOwner String
   name        String
-  value       String // aqui no value vou colocar o valor da posição left, right, down ou top posição que é onde vai ficar sempre os comerciais. 
+  position       String // aqui no value vou colocar o valor da posição left, right, down ou top posição que é onde vai ficar sempre os comerciais. 
 
   status      Boolean?      @default(true)
   created_At  DateTime?     @default(now())
@@ -171,7 +171,7 @@ model Products {
   labelPrice String // é a label que pode ir ao lado do preço se é a entrada,inteira,meia,promoção.
   price      Float
 
-  expirationDate String
+  expirationDate String?
   dateRegistered String
 
   positionOrder Int?
@@ -180,6 +180,8 @@ model Products {
   allowAddCoupon Boolean? @default(false)
 
   status     Boolean?  @default(true)
+
+  
   created_At DateTime? @default(now())
   updated_At DateTime?
 
@@ -196,7 +198,7 @@ model TypesProducts {
   id          String @id @default(uuid())
   idUserOwner String
   name        String
-  value       String // aqui no value vou colocar o valor da posição principal, subprincipal, letreiro e outros. 
+  position    String // aqui no value vou colocar o valor da posição principal, subprincipal, letreiro e outros. 
 
   status     Boolean?  @default(true)
   created_At DateTime? @default(now())

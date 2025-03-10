@@ -2,20 +2,20 @@ import { Messages, MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
 import { BinRegisterMoveItemsService } from "../Bin/binRegisterMoveItemsService";
 
-interface ICommercialsDeleteService {
+interface ITypeCommercialsDeleteService {
   id: string;
   idUserOwner: string;
 }
 
-class CommercialsDeleteService {
+class TypeCommercialsDeleteService {
   async execute({
     id,
     idUserOwner,
-  }: ICommercialsDeleteService) {
+  }: ITypeCommercialsDeleteService) {
     if(!id){
         return {
             data: {
-                message: "Não foi possível prosseguir com esta ação, por favor envio o id do comercial para prosseguir",
+                message: "Não foi possível prosseguir com esta ação, por favor envio o id do tipo de comercial para prosseguir",
                 status: 403,
             },
         }
@@ -37,17 +37,16 @@ class CommercialsDeleteService {
     });
 
 
-    const commercialsExists = await prismaClient.commercials.findFirst({
+    const typeCommercialsExists = await prismaClient.typesCommercials.findFirst({
       where: {
         id: id,
-        idUserOwner: idUserOwner,
       }
     });
 
-    if (!commercialsExists) {
+    if (!typeCommercialsExists) {
       return {
         data: {
-          message: "Não foi possível prosseguir com esta ação, este comercial não existe",
+          message: "Não foi possível prosseguir com esta ação, este tipo de comercial não existe",
           status: 403,
         },
       };
@@ -63,21 +62,21 @@ class CommercialsDeleteService {
     }
 
     try {
-
-      const binRegisterItemsService = new BinRegisterMoveItemsService() 
+   
+      const binRegisterItemsService = new BinRegisterMoveItemsService();
 
       const responseDelete = await binRegisterItemsService.execute({
-          id: id,
-          tableName: "commercials",
-          idUserOwner: commercialsExists.idUserOwner
-      })  
+        id: id,
+        tableName: "typesCommercials",
+        idUserOwner: typeCommercialsExists.idUserOwner,
+      });
 
       return {
-          data: {
-              message: responseDelete.data.message,
-              status: responseDelete.data.status
-          }
-      }   
+        data: {
+          message: responseDelete.data.message,
+          status: responseDelete.data.status,
+        },
+      };
     } catch (err) {
       return {
         data: {
@@ -89,4 +88,4 @@ class CommercialsDeleteService {
   }
 }
 
-export { CommercialsDeleteService };
+export { TypeCommercialsDeleteService };

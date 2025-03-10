@@ -1,3 +1,4 @@
+import { MessagesError } from "../../constants/messages.api";
 import { TypesAccess } from "../../keys/typeAccess/typesAccess";
 import prismaClient from "../../prisma";
 
@@ -87,7 +88,7 @@ class BinGetAllItemsService {
     } catch (err) {
       return {
         data: {
-          message: `Ocorreu um erro ao buscar lista de itens da lixeira ${err}`,
+          message: `${MessagesError.GetAllMessageError} ${err}`,
           status: 500,
         },
       };

@@ -3,6 +3,7 @@ import { UploadedFile } from "express-fileupload";
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import { v6 as uuid } from "uuid";
 import { validationsCommercialsService } from "../../utils/validationsServices/validationsCommercials";
+import { Messages, MessagesError } from "../../constants/messages.api";
 
 interface ICommercialsRegisterService {
   idUserOwner: string;
@@ -124,14 +125,14 @@ class CommercialsRegisterService {
 
       return {
         data: {
-          message: "Comercial cadastrado com sucesso",
+          message: Messages.RegisterMessageSuccess,
           status: 200,
         },
       };
     } catch (err) {
       return {
         data: {
-          message: `Ocorreu um error durante o cadastro de comercial ${err}`,
+          message: `${MessagesError.RegisterMessageError} ${err}`,
           status: 500,
         },
       };
