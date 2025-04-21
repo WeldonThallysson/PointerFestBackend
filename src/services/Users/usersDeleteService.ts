@@ -18,6 +18,7 @@ class UsersDeleteService {
         },
       };
     }
+
     const userExistsLogged = await prismaClient.users.findFirst({
       where: {
         id: id_user_logged,
@@ -62,6 +63,7 @@ class UsersDeleteService {
         },
       };
     }
+    
     await prismaClient.$transaction(async (tx) => {
       if (userExists.typeAccess === TypesAccess.Promoter) {
         await tx.coupon.updateMany({
@@ -87,7 +89,7 @@ class UsersDeleteService {
       await tx.categories.deleteMany({ where: { idUserOwner: id } });
       await tx.commercials.deleteMany({ where: { idUserOwner: id } });
       await tx.purchases.deleteMany({ where: { idUser: id } });
-      await tx.bin.deleteMany({ where: { idUser: id } });
+      await tx.bin.deleteMany({ where: { idUserOwner: id } });
     });
 
     return {

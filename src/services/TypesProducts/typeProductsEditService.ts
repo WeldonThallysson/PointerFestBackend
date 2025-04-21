@@ -1,6 +1,5 @@
 import { Messages, MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
-import { validationsTypeCommercialsService } from "../../utils/validationsServices/validationsTypeCommercials";
 import { validationsTypeProductsService } from "../../utils/validationsServices/validationsTypeProducts";
 
 interface ITypeProductsEditService {
@@ -22,8 +21,7 @@ class TypeProductsEditService {
     if (!id) {
       return {
         data: {
-          message:
-            "Não foi possível prosseguir com esta ação, por favor envio o id do tipo do produto para prosseguir",
+          message: "Não foi possível prosseguir com esta ação, por favor envio o id do tipo do produto para prosseguir",
           status: 403,
         },
       };

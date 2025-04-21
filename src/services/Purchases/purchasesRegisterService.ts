@@ -4,8 +4,6 @@ import { formatterDateToIso } from "../../utils/formatters/formatterDate";
 import { IProduct } from "../../interface/interface.checkoutPaymentMethod";
 import { todayWithTime } from "../../utils/formatters/formatterToday";
 import { Messages, MessagesError } from "../../constants/messages.api";
-
-
  
 interface IRegisterVoucher {
     cpfCnpj: string
@@ -96,7 +94,6 @@ class RegisterVoucherService {
         };
     }
 
-    // Buscar se o método de pagamento existe no banco
     const methodPaymentExists = await prismaClient.methodsPayments.findFirst({
       where: { typeMethodPayment: paymentMethod },
     });
@@ -109,8 +106,9 @@ class RegisterVoucherService {
         },
       };
     }
+    
     const todayAt = todayWithTime();
-
+    
     try {
      const responseVoucher = await prismaClient.purchases.create({
         data: {

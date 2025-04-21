@@ -91,8 +91,8 @@ class GetDispatchVouchersForEmailsService {
       codePayment: dataResponseDetailsVoucher?.data?.items?.dataDetailsVoucherFormated?.codePayment,
       codeReferencePayment: dataResponseDetailsVoucher?.data?.items?.dataDetailsVoucherFormated?.codeReferencePayment,
       products: typeof dataResponseDetailsVoucher?.data?.items?.dataDetailsVoucherFormated?.products === "string"
-    ? JSON.parse(dataResponseDetailsVoucher?.data?.items?.dataDetailsVoucherFormated?.products)
-    : dataResponseDetailsVoucher?.data?.items?.dataDetailsVoucherFormated?.products
+      ? JSON.parse(dataResponseDetailsVoucher?.data?.items?.dataDetailsVoucherFormated?.products)
+      : dataResponseDetailsVoucher?.data?.items?.dataDetailsVoucherFormated?.products
     };
 
     const htmlContentBuyClient = readTemplate(templatePathClient, replacements);
@@ -102,7 +102,7 @@ class GetDispatchVouchersForEmailsService {
       {
         from: `"Up Point" <${process.env.EMAIL_USER_PASSPORT}>`,
         to: userExists.email,
-        subject: "🎉 Parabéns pela compra! Confira seu voucher!",
+        subject: "🎉 Parabéns pela compra! Confira seu comprovante!",
         html: htmlContentBuyClient,
         messageId: `<${Date.now()}-${Math.random().toString(36).slice(2)}>`,
         headers: { "X-Entity-Ref-ID": `${Date.now()}` },

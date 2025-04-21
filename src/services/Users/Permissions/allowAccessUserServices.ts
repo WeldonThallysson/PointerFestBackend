@@ -71,8 +71,7 @@ class AllowAccessUserService {
     if (!userLoggedExists) {
       return {
         data: {
-          message:
-            "Não foi possível realizar esta ação, usuário responsavel não encontrado.",
+          message: "Não foi possível realizar esta ação, usuário responsavel não encontrado.",
           status: 400,
         },
       };
@@ -81,8 +80,7 @@ class AllowAccessUserService {
     if (!userExists) {
       return {
         data: {
-          message:
-            "Não foi possível realizar esta ação, usuário não encontrado.",
+          message: "Não foi possível realizar esta ação, usuário não encontrado.",
           status: 400,
         },
       };

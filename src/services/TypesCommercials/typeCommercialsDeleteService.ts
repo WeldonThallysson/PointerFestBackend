@@ -36,7 +36,6 @@ class TypeCommercialsDeleteService {
       },
     });
 
-
     const typeCommercialsExists = await prismaClient.typesCommercials.findFirst({
       where: {
         id: id,
@@ -62,9 +61,7 @@ class TypeCommercialsDeleteService {
     }
 
     try {
-   
       const binRegisterItemsService = new BinRegisterMoveItemsService();
-
       const responseDelete = await binRegisterItemsService.execute({
         id: id,
         tableName: "typesCommercials",

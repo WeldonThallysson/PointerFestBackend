@@ -15,7 +15,7 @@ class TypeProductsGetDetailsService {
             if(!id){
                 return {
                     data: {
-                        message: "Não foi possível prosseguir com esta ação, por favor envio o id do tipo do comercial para prosseguir",
+                        message: "Não foi possível prosseguir com esta ação, por favor envio o id do tipo do produto para prosseguir",
                         status: 400
                     }
                 }
@@ -39,7 +39,6 @@ class TypeProductsGetDetailsService {
             const typeProductsExists = await prismaClient.typesProducts.findFirst({
                 where: {
                     id: id,
-                    idUserOwner: idUserOwner
                 }
             })
     

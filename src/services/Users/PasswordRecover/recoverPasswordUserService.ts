@@ -54,14 +54,14 @@ class RecoverPasswordService {
       );
 
       const resetLink = `${process.env.FRONTEND_URL}${process.env.LINK_REDEFINE_PASSWORD_URL}/${tokenRecoverPassword}`;
-      const filePath = path.join( __dirname,"../../../config/templates/templateRecoverPassword.html");
+      const filePath = path.join(__dirname, "../../../config/templates/templateRecoverPassword.html");
       let htmlContent = fs.readFileSync(filePath, "utf-8");
 
       htmlContent = htmlContent
         .replace("{{resetLink}}", resetLink)
         .replace("{{userName}}", userExists.name.split(" ")[0]);
 
-        const mailOptions = {
+      const mailOptions = {
           from: `Suporte Up Point <${process.env.EMAIL_USER_RECOVERPASSWORD}>`,
           to: userExists.email,
           subject: "Redefinição de Senha",

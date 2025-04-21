@@ -61,8 +61,7 @@ class PurchasesDeleteService {
     ) {
       return {
         data: {
-          message:
-            "Não foi possível prosseguir, sua conta não possui permissão para esta ação apenas contas master!",
+          message: "Não foi possível prosseguir, sua conta não possui permissão para esta ação apenas contas master!",
           status: 404,
         },
       };
@@ -70,7 +69,6 @@ class PurchasesDeleteService {
 
     try {
       const binRegisterItemsService = new BinRegisterMoveItemsService();
-
       const responseDelete = await binRegisterItemsService.execute({
         id: id,
         tableName: "purchases",

@@ -1,6 +1,5 @@
 import { Messages, MessagesError } from "../../constants/messages.api";
 import prismaClient from "../../prisma";
-import { validationsTypeCommercialsService } from "../../utils/validationsServices/validationsTypeCommercials";
 import { validationsTypeProductsService } from "../../utils/validationsServices/validationsTypeProducts";
 
 interface ITypeProductsRegisterService {
@@ -20,7 +19,6 @@ class TypeProductsRegisterService {
       idUserOwner,
       name,
       position
-
     });
 
     if (validationsCommercials) {

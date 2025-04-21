@@ -67,7 +67,10 @@ class TypeProductsDeleteService {
       const responseDelete = await binRegisterItemsService.execute({
         id: id,
         tableName: "typesProducts",
-        idUserOwner: typeProductExists.idUserOwner,
+        idUserOwner: 
+         typeProductExists.idUserOwner ? 
+         typeProductExists.idUserOwner : 
+         idUserOwner,
       });
 
       return {
@@ -76,6 +79,7 @@ class TypeProductsDeleteService {
           status: responseDelete.data.status,
         },
       };
+
     } catch (err) {
       return {
         data: {

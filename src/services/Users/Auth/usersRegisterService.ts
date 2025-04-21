@@ -9,7 +9,7 @@ import { validationsUserService } from "../../../utils/validationsServices/valid
 interface IUsersRegisterService {
   name: string;
   cpfCnpj:  string;
-  typePerson:  TypePerson
+  typePerson: TypePerson
   email: string;
   birthDate: string;
   gender: string;
@@ -90,7 +90,7 @@ class UsersRegisterService {
 
     return {
       data: {
-        message: "Cadastro realizado com sucesso !",
+        message: "Cadastro realizado com sucesso!",
         status: 200,
       }
     };

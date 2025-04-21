@@ -69,7 +69,6 @@ class TypeCommercialsEditService {
     }
 
     try {
-
       await prismaClient.typesCommercials.update({
         where: {
             id: id,
