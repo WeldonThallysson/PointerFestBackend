@@ -37,15 +37,19 @@ class ProductsGetAllService {
 
     if (!userExists) {
       return {
-        message: "Não foi possível prosseguir, este usuário não existe!",
-        status: 404,
+        data: {
+         message: "Não foi possível prosseguir, este usuário não existe!",
+         status: 404,
+        }
       };
     }
     if (!typesProductsExists) {
       return {
-        message:
+        data: {
+          message:
           "Não foi possível prosseguir com está ação, o tipo do produto não existe!",
-        status: 404,
+         status: 404,
+        }
       };
     }
 

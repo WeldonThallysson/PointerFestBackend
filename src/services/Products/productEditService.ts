@@ -82,29 +82,37 @@ class ProductsEditService {
      })
       if(!productExists){
          return {
-            status: 400,
-            message: "Não foi possível prosseguir, esse produto não existe"
+            data: {
+             status: 400,
+             message: "Não foi possível prosseguir, esse produto não existe"
+           }
          }
       }
 
       if(!categoryExists){
         return {
+          data: {
            status: 400,
            message: "Não foi possível prosseguir, esse categoria não existe"
-        }
+          }  
+         }
      }
      
      if(!typesProductsExists){
         return {
+          data: {
            status: 400,
            message: "Não foi possível prosseguir, esse tipo do produto não existe"
-        }
+          }
+         }
      }
 
      if(!userExists){
         return {
+           data: {
             status: 400,
             message: "Não foi possível prosseguir, esse usuário não existe"
+           }
          }
      }
  
@@ -131,13 +139,17 @@ class ProductsEditService {
          })  
         
          return {
+            data: {
             status: 200,
             message: Messages.UpdateMessageSuccess,
+         }    
          }
       } catch(err) {
          return {
+          data: {
             status: 500,
             message:  `${MessagesError.UpdateMessageError} ${err}`,
+          } 
          }
       }
     

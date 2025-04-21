@@ -23,8 +23,10 @@ class ProductsGetDetailsSevice {
 
     if (!products) {
       return {
-        message: "Não foi possível prosseguir, o produto não existe!",
-        status: 404,
+        data: {
+          message: "Não foi possível prosseguir, o produto não existe!",
+          status: 404,
+        }
       };
     }
 

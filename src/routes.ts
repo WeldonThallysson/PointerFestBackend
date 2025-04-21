@@ -8,10 +8,10 @@ import { UsersGetDetailsController } from "./controllers/Users/usersGetDetailsCo
 import { isLogged } from "./middlewares/isLogged";
 import { UsersDeleteController } from "./controllers/Users/usersDeleteController";
 import { CategoriesRegisterController } from "./controllers/Categories/categoriesRegisterController";
-import { ListagemTodasCategoriasController } from "./controllers/Categories/categoriesGetAllController";
-import { ListagemCategoriasIdController } from "./controllers/Categories/categoriesGetDetailsController";
-import { EditarCategoriasController } from "./controllers/Categories/categoriesEditController";
-import { DeletarCategoriaController } from "./controllers/Categories/categoriesDeleteController";
+import { CategoriesGetAllController } from "./controllers/Categories/categoriesGetAllController";
+import { CategoriesGetDetailsController } from "./controllers/Categories/categoriesGetDetailsController";
+import { CategoriesEditController } from "./controllers/Categories/categoriesEditController";
+import { CategoriesDeleteController } from "./controllers/Categories/categoriesDeleteController";
  
 import { CadastrarEventoController } from "./controllers/Events/cadastrarEventoController";
 import { ListarTodosEventosController } from "./controllers/Events/listarTodosEventosController";
@@ -22,12 +22,12 @@ import { EditarEventoController } from "./controllers/Events/editarEventoControl
 import { DeletarEventoController } from "./controllers/Events/deletarEventoController";
 import { UsersEditController } from "./controllers/Users/usersEditController";
 import { UsersGetAllController } from "./controllers/Users/usersGetAllController";
-import { CadastroProdutoController } from "./controllers/Products/cadastroProdutosController";
+import { ProductRegisterController } from "./controllers/Products/productsRegisterController";
 
-import { ListarProdutosController } from "./controllers/Products/listarProdutosController";
-import { DeletarProdutosController } from "./controllers/Products/deletarProdutoController";
-import { ListarDetalhesProdutosController } from "./controllers/Products/listarDetalhesProdutosController";
-import { EditarProdutosController } from "./controllers/Products/editarProdutosController";
+import { ProductGetAllController } from "./controllers/Products/productsGetAllController";
+import { ProductsDeleteController } from "./controllers/Products/productDeleteController";
+import { ProductGetDetailsController } from "./controllers/Products/productsGetDetailsController";
+import { ProductsEditController } from "./controllers/Products/productsEditController";
 import { UsersGetAllListController } from "./controllers/Users/usersListUsersController";
 import { RecoverPasswordController } from "./controllers/Users/PasswordRecover/recoverPasswordUserController";
 import { RedefinePasswordController } from "./controllers/Users/PasswordRecover/redefinePasswordUserController";
@@ -86,10 +86,10 @@ router.delete("/bin/:id", isLogged, new BinDeleteItemsController().handle);
 
 // rotas para cadastrar categorias 
 router.post("/categories", isLogged, new CategoriesRegisterController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.get("/categories", isLogged, new ListagemTodasCategoriasController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario )
-router.get("/categories/:id", isLogged, new ListagemCategoriasIdController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.put("/categories", isLogged, new EditarCategoriasController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
-router.delete("/categories/:id", isLogged, new DeletarCategoriaController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+router.get("/categories", isLogged, new CategoriesGetAllController().handle)  // essa rota vai ser chamada no Aplicativo front end( usuario )
+router.get("/categories/:id", isLogged, new CategoriesGetDetailsController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+router.put("/categories", isLogged, new CategoriesEditController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
+router.delete("/categories/:id", isLogged, new CategoriesDeleteController().handle) // essa rota vai ser chamada no Aplicativo front end( admin )
 
 // rotas para cadastrar Eventos
 
@@ -101,10 +101,10 @@ router.delete("/eventos/:id", isLogged,new DeletarEventoController().handle)   /
 
 
 // rotas para cadastrar os produtos da Up Point 
-router.post("/produtos", isLogged, new CadastroProdutoController().handle)
-router.put("/produtos", isLogged, new EditarProdutosController().handle)
-router.get("/produtos", isLogged, new ListarProdutosController().handle)
-router.get("/produtos/:id", isLogged, new ListarDetalhesProdutosController().handle)
-router.delete("/produtos/:id", isLogged, new DeletarProdutosController().handle)
+router.post("/produtos", isLogged, new ProductRegisterController().handle)
+router.put("/produtos", isLogged, new ProductsEditController().handle)
+router.get("/produtos", isLogged, new ProductGetAllController().handle)
+router.get("/produtos/:id", isLogged, new ProductGetDetailsController().handle)
+router.delete("/produtos/:id", isLogged, new ProductsDeleteController().handle)
 
 export {router}
