@@ -10,6 +10,7 @@ class UsersEditController {
         const {
             id,
             name,
+            companyName,
             email,
             password,
             cpfCnpj,
@@ -38,6 +39,7 @@ class UsersEditController {
             id,
             id_user_logged,
             name,
+            companyName,
             email,
             password,
             cpfCnpj,

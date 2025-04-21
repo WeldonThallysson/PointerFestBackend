@@ -9,6 +9,7 @@ import { isValidPhoneNumber } from "../validators/validatorPhone";
 
 interface IParamsUserService {
   name: string; // nome do cliente ou administrador
+  companyName?: string | null
   email: string; // email
   password?: string; // senha
   cpfCnpj: string; // cpf
@@ -27,6 +28,7 @@ interface IParamsUserService {
 
 export const validationsUserService = ({
   name,
+  companyName,
   email,
   cpfCnpj,
   phone,
@@ -97,7 +99,14 @@ export const validationsUserService = ({
     };
   }
 
- 
+  if(!companyName && typePerson === TypePerson.Juridic){
+     return {
+      data: {
+        message: "Não foi possível prosseguir, por favor informe o Nome Fantasia sua Empresa",
+        status: 400
+      }
+     }
+  }
 
   if (typePerson !== TypePerson.Fisic && typePerson !== TypePerson.Juridic) {
     return {

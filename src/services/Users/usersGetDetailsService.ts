@@ -29,6 +29,7 @@ class UsersGetDetailsService {
         select: {
             id: true,
             name: true,
+            companyName: true,
             email: true,
             phone: true,
             cpfCnpj: true,
@@ -65,6 +66,7 @@ class UsersGetDetailsService {
         select: {
             id: true,
             name: true,
+            companyName: true,
             email: true,
             cpfCnpj: true,
             birthDate: true,

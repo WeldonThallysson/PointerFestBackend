@@ -20,6 +20,7 @@ interface IEditUserService {
   password: string;
   cpfCnpj: string;
   name?: string | null;
+  companyName?: string | null;
   complement?: string | null;
   typePerson?: TypePerson | null;
   phone?: string | null;
@@ -53,6 +54,7 @@ class UsersEditService {
     termsReceiptNews,
     typePerson,
     name,
+    companyName,
     email,
     password,
     cpfCnpj,
@@ -83,13 +85,14 @@ class UsersEditService {
     }
 
     const verifyValidations = validationsUserService({
-      name: name,
-      email: email,
-      cpfCnpj: cpfCnpj,
-      phone: phone,
-      birthDate: birthDate,
-      gender: gender,
-      typePerson: typePerson,
+      name,
+      companyName,
+      email,
+      cpfCnpj,
+      phone,
+      birthDate,
+      gender,
+      typePerson,
       password: password ? password : null,
     });
 
@@ -214,7 +217,9 @@ class UsersEditService {
       };
     }
 
-    if (typeAccess && (userExistsLogged.typeAccess === TypesAccess.User ||
+    if (
+      typeAccess &&
+      (userExistsLogged.typeAccess === TypesAccess.User ||
         userExistsLogged.typeAccess === TypesAccess.Promoter ||
         userExistsLogged.typeAccess === TypesAccess.Worker)
     ) {
@@ -278,14 +283,13 @@ class UsersEditService {
           where: { id: isLoggedUser ? id_user_logged : id },
           data: {
             name: name ? name : null,
+            companyName: companyName !== null ? companyName : null,
             email: email ? email : null,
             password: password ? await hash(password, 8) : user.password,
             cpfCnpj: cpfCnpj ? deformatter(cpfCnpj) : null,
             phone: phone ? deformatter(phone) : null,
-            birthDate: birthDate
-              ? formatterDateToIso(birthDate)
-              : null,
-            
+            birthDate: birthDate ? formatterDateToIso(birthDate) : null,
+
             street: street ? street : null,
             complement: complement ? complement : null,
             profileAvatar: profileAvatarUpdated, // Será atualizado pelo controller
@@ -293,25 +297,36 @@ class UsersEditService {
             typePerson: typePerson ? typePerson : null,
             neighborhood: neighborhood ? neighborhood : null,
             city: city ? city : null,
-           
+
             gender: gender ? gender : null,
             cep: cep ? deformatter(cep) : null,
             region_code: region_code ? region_code : null,
             number_address: number_address ? number_address : null,
-   
+
             typeAccess: typeAccess ? typeAccess : user.typeAccess,
 
-            termsUsePlatform: termsUsePlatform !== null ? termsUsePlatform : user.termsUsePlatform,
-            termsUseLGPD: termsUseLGPD !== null ? termsUseLGPD : user.termsUseLGPD,
-            termsReceiptNews: termsReceiptNews !== null ? termsReceiptNews : user.termsReceiptNews,
-            termsPrivacyPolicy: termsPrivacyPolicy !== null ? termsPrivacyPolicy :  user.termsPrivacyPolicy,
+            termsUsePlatform:
+              termsUsePlatform !== null
+                ? termsUsePlatform
+                : user.termsUsePlatform,
+            termsUseLGPD:
+              termsUseLGPD !== null ? termsUseLGPD : user.termsUseLGPD,
+            termsReceiptNews:
+              termsReceiptNews !== null
+                ? termsReceiptNews
+                : user.termsReceiptNews,
+            termsPrivacyPolicy:
+              termsPrivacyPolicy !== null
+                ? termsPrivacyPolicy
+                : user.termsPrivacyPolicy,
 
-            status: status !== null &&
+            status:
+              status !== null &&
               userExistsLogged.typeAccess !== TypesAccess.User
                 ? status
                 : user.status,
             updated_At: todayAt,
-        
+
             editedBy: userExistsLogged?.name ?? null,
             typeAccessEditedBy: userExistsLogged?.typeAccess ?? null,
             cpfEditedBy: userExistsLogged?.cpfCnpj ?? null,

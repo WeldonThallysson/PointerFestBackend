@@ -8,6 +8,7 @@ import { validationsUserService } from "../../../utils/validationsServices/valid
 
 interface IUsersRegisterService {
   name: string;
+  companyName?: string | null;
   cpfCnpj:  string;
   typePerson: TypePerson
   email: string;
@@ -24,6 +25,7 @@ interface IUsersRegisterService {
 class UsersRegisterService {
   async execute({
     name,
+    companyName,
     email,
     cpfCnpj,
     typePerson,
@@ -38,13 +40,14 @@ class UsersRegisterService {
   }: IUsersRegisterService) {
  
     const verifyValidations = validationsUserService({
-      name: name,
-      email: email,
-      cpfCnpj: cpfCnpj,
-      phone: phone,
-      birthDate: birthDate,
-      gender: gender,
-      typePerson: typePerson,
+      name,
+      companyName,
+      email,
+      cpfCnpj,
+      phone,
+      birthDate,
+      gender,
+      typePerson,
       password: password ? password : null,
     });
     
@@ -67,12 +70,14 @@ class UsersRegisterService {
       };
     };
 
+  
     const passwordHash = await hash(password, 8);
     const todayAt = todayWithTime();
 
      await prismaClient.users.create({
       data: {
         name: name,
+        companyName: companyName !== null ? companyName : null,
         email: email,
         password: passwordHash,
         cpfCnpj: deformatter(cpfCnpj),

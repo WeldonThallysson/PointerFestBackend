@@ -15,6 +15,7 @@ interface IGetAllUserService {
   id_user_logged: string;
   idOtherUser: string | null;
   name?: string | null;
+  companyName?: string | null;
   email?: string | null;
   cpfCnpj?: string | null;
   complement?: string | null;
@@ -41,6 +42,7 @@ class UsersGetAllService {
     id_user_logged,
     idOtherUser,
     name,
+    companyName,
     email,
     cpfCnpj,
     complement,
@@ -144,7 +146,11 @@ class UsersGetAllService {
         contains: name,
         mode: "insensitive",
       };
-
+    if (companyName)
+        where.companyName = {
+          contains: companyName,
+          mode: "insensitive",
+    };
     if (email) where.email = { contains: email, mode: "insensitive" };
 
     if (cpfCnpj) where.cpfCnpj = { contains: cpfCnpj, mode: "insensitive" };
@@ -185,6 +191,7 @@ class UsersGetAllService {
         id: true,
         idPlan: true,
         name: true,
+        companyName: true,
         email: true,
         cpfCnpj: true,
         phone: true,

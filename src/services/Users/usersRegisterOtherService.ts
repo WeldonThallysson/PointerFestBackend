@@ -16,6 +16,7 @@ import { UploadedFile } from "express-fileupload";
 interface IUsersRegisterService {
   id_user_logged?: string;
   name: string;
+  companyName?: string | null
   email: string; 
   password: string; 
   cpfCnpj: string; 
@@ -47,6 +48,7 @@ class UsersRegisterOtherService {
   async execute({
     id_user_logged,
     name,
+    companyName,
     email,
     password,
     cpfCnpj,
@@ -82,13 +84,14 @@ class UsersRegisterOtherService {
     }
 
     const verifyValidations = validationsUserService({
-      name: name,
-      email: email,
-      cpfCnpj: cpfCnpj,
-      phone: phone,
-      birthDate: birthDate,
-      gender: gender,
-      typePerson: typePerson,
+      name,
+      companyName,
+      email,
+      cpfCnpj,
+      phone,
+      birthDate,
+      gender,
+      typePerson,
       password: password ? password : null,
     });
 
@@ -142,6 +145,7 @@ class UsersRegisterOtherService {
     
     const validationError = validationsUserService({
       name,
+      companyName,
       email,
       password,
       cpfCnpj,
@@ -191,6 +195,7 @@ class UsersRegisterOtherService {
       const responseRegisterUser = await prismaClient.users.create({
         data: {
           name,
+          companyName,
           email,
           password: passwordHash,
           cpfCnpj: deformatter(cpfCnpj),

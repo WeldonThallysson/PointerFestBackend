@@ -6,6 +6,7 @@ class UsersRegisterController {
     async handle(req: Request, res: Response){
         const {
             name,
+            companyName,
             email,
             cpfCnpj,
             typePerson,
@@ -22,6 +23,7 @@ class UsersRegisterController {
         const usersRegister = new UsersRegisterService()
         const responseUsersRegister = await usersRegister.execute({
             name,
+            companyName,
             email,
             cpfCnpj,
             typePerson,

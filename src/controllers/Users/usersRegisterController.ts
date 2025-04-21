@@ -9,6 +9,7 @@ class UsersRegisterOtherController {
     const id_user_logged = req.user_id
     const {
       name,
+      companyName,
       email,
       password,
       cpfCnpj,
@@ -38,6 +39,7 @@ class UsersRegisterOtherController {
     const responseRegisterUser = await usersRegisterOtherService.execute({
       id_user_logged,
       name,
+      companyName,
       email,
       password,
       cpfCnpj,

@@ -7,6 +7,7 @@ class UsersGetAllListController {
     const id_user_logged = req.user_id
     const idOtherUser = req.query.idOtherUser as string
     const name = req.query.name as string
+    const companyName = req.query.companyName as string
     const email = req.query.email as string
     const cpfCnpj = req.query.cpfCnpj as string
     const cep = req.query.cep as string
@@ -25,6 +26,7 @@ class UsersGetAllListController {
       id_user_logged,
       idOtherUser,
       name,
+      companyName: companyName,
       email,
       cpfCnpj: cpfCnpj ? deformatter(cpfCnpj) : null,
       phone: phone ? deformatter(phone) : null,

@@ -15,6 +15,7 @@ interface IUsersGetAllListService {
   id_user_logged: string;
   idOtherUser: string | null;
   name?: string | null;
+  companyName?: string | null;
   email?: string | null;
   cpfCnpj?: string | null;
   phone?: string | null;
@@ -37,6 +38,7 @@ class UsersGetAllListService {
     id_user_logged,
     idOtherUser,
     name,
+    companyName,
     email,
     cpfCnpj,
     phone,
@@ -95,6 +97,7 @@ class UsersGetAllListService {
 
     if (idOtherUser) where.id = { contains: idOtherUser, mode: "insensitive" };
     if (name) where.name = { contains: name, mode: "insensitive" };
+    if (companyName) where.companyName = { contains: companyName, mode: "insensitive"}
     if (email) where.email = { contains: email, mode: "insensitive" };
     if (cpfCnpj) where.cpfCnpj = { contains: cpfCnpj, mode: "insensitive" };
     if (phone) where.phone = { contains: phone };
@@ -116,6 +119,7 @@ class UsersGetAllListService {
       select: {
         id: true,
         name: true,
+        companyName: true,
         email: true,
         cpfCnpj: true,
         phone: true,

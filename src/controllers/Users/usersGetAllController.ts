@@ -7,6 +7,7 @@ class UsersGetAllController {
       const id_user_logged = req.user_id;
       const idOtherUser = req.query.idOtherUser as string;
       const name = req.query.name as string;
+      const companyName = req.query.companyName as string;
       const email = req.query.email as string;
       const cpfCnpj = req.query.cpfCnpj as string;
       const phone = req.query.phone as string;
@@ -31,6 +32,7 @@ class UsersGetAllController {
           id_user_logged: id_user_logged,
           idOtherUser: idOtherUser,
           name: name,
+          companyName: companyName,
           email: email,
           cpfCnpj: cpfCnpj,
           phone: phone,
