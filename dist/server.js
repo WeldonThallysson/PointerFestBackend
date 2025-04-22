@@ -4202,7 +4202,6 @@ router.get("/produtos/:id", isLogged, new ProductGetDetailsController().handle);
 router.delete("/produtos/:id", isLogged, new ProductsDeleteController().handle);
 
 // src/server.ts
-var import_express_async_errors = require("express-async-errors");
 var import_cors = __toESM(require("cors"));
 var import_path3 = __toESM(require("path"));
 var import_express_fileupload = __toESM(require("express-fileupload"));
@@ -4220,17 +4219,6 @@ app.use((0, import_express_fileupload.default)({
   }
 }));
 app.use(import_express2.default.json());
-app.use((err, req, res, next) => {
-  if (err instanceof Error) {
-    return res.status(400).json({
-      err: err.message
-    });
-  }
-  return res.status(500).json({
-    status: "error",
-    message: "internal error server"
-  });
-});
 app.use(router);
 app.use(
   "/files",
