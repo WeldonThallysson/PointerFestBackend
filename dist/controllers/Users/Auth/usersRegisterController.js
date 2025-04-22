@@ -204,10 +204,18 @@ var validationsUserService = ({
       }
     };
   }
+  if (companyName && typePerson === "PF" /* Fisic */) {
+    return {
+      data: {
+        message: "N\xE3o \xE9 poss\xEDvel cadastrar um nome fantasia para pessoas f\xEDsicas.",
+        status: 400
+      }
+    };
+  }
   if (!companyName && typePerson === "PJ" /* Juridic */) {
     return {
       data: {
-        message: "N\xE3o foi poss\xEDvel prosseguir, por favor informe o Nome Fantasia sua Empresa",
+        message: "N\xE3o \xE9 poss\xEDvel prosseguir. Por favor, informe o nome fantasia da sua empresa.",
         status: 400
       }
     };

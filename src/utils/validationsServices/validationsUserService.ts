@@ -99,10 +99,19 @@ export const validationsUserService = ({
     };
   }
 
+  if (companyName && typePerson === TypePerson.Fisic) {
+    return {
+      data: {
+        message: "Não é possível cadastrar um nome fantasia para pessoas físicas.",
+        status: 400
+      }
+    }
+  }
+  
   if(!companyName && typePerson === TypePerson.Juridic){
      return {
       data: {
-        message: "Não foi possível prosseguir, por favor informe o Nome Fantasia sua Empresa",
+        message: "Não é possível prosseguir. Por favor, informe o nome fantasia da sua empresa.",
         status: 400
       }
      }
