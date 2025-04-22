@@ -114,7 +114,7 @@ class CommercialsRegisterService {
           name: name,
           description: description ? description : null,
           idTypeCommercial: idTypeCommercial,
-          positionOrder:positionOrder ? positionOrder : null,
+          positionOrder: positionOrder ? positionOrder : null,
           idUrlImageCommercial:idUrlImageCommercial ? idUrlImageCommercial : null,
           urlImageCommercial: resultFile.url
             ? resultFile.url
