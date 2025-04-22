@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "18"
+    "node": "22"
   },
   "dependencies": {
     "@prisma/client": "^6.6.0",
