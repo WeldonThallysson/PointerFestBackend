@@ -1,6 +1,5 @@
 import express,{ Request,Response,NextFunction } from "express";
 import { router } from "./routes";
-import "express-async-errors"
 import cors from 'cors'
 import path from 'path'
 import fileUpload from "express-fileupload";
@@ -24,6 +23,8 @@ app.use(fileUpload({
 
 app.use(express.json())
 
+
+/*
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if(err instanceof Error){
         return res.status(400).json({
@@ -38,6 +39,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 }) // esse middleware serve para enviar todos os erros de uma forma amigavel e bonita.
 
 
+*/
 app.use(router)
 app.use("/files",
   express.static(path.resolve(__dirname,"..","tmp"))
