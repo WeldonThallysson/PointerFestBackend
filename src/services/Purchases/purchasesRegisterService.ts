@@ -5,7 +5,7 @@ import { IProduct } from "../../interface/interface.checkoutPaymentMethod";
 import { todayWithTime } from "../../utils/formatters/formatterToday";
 import { Messages, MessagesError } from "../../constants/messages.api";
  
-interface IRegisterVoucher {
+interface IRegisterPurchases{
     cpfCnpj: string
     typeMethodPayment: string
     datePayment: string
@@ -15,7 +15,7 @@ interface IRegisterVoucher {
     totalPrice?: number | null
 }
 
-class RegisterVoucherService {
+class PurchasesRegisterService {
   async execute({
     cpfCnpj,
     typeMethodPayment,
@@ -24,7 +24,7 @@ class RegisterVoucherService {
     datePayment,
     products,
     totalPrice
-  }: IRegisterVoucher) {
+  }: IRegisterPurchases) {
     // Verificar se todos os campos obrigatórios foram preenchidos
     if (
       !cpfCnpj ||
@@ -143,4 +143,4 @@ class RegisterVoucherService {
   }
 }
 
-export {RegisterVoucherService};
+export {PurchasesRegisterService};

@@ -286,7 +286,7 @@ class UsersEditService {
             companyName: companyName !== null ? companyName : null,
             email: email ? email : null,
             password: password ? await hash(password, 8) : user.password,
-            cpfCnpj: cpfCnpj ? deformatter(cpfCnpj) : null,
+            cpfCnpj: cpfCnpj ? deformatter(cpfCnpj) : user.cpfCnpj,
             phone: phone ? deformatter(phone) : null,
             birthDate: birthDate ? formatterDateToIso(birthDate) : null,
 
@@ -294,7 +294,7 @@ class UsersEditService {
             complement: complement ? complement : null,
             profileAvatar: profileAvatarUpdated, // Será atualizado pelo controller
             profileSocialUrl: profileSocialUrl ? profileSocialUrl : null,
-            typePerson: typePerson ? typePerson : null,
+            typePerson: typePerson ? typePerson : user.typePerson,
             neighborhood: neighborhood ? neighborhood : null,
             city: city ? city : null,
 

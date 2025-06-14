@@ -14,7 +14,7 @@ class UsersDeleteController {
             
         });
 
-        return res.json(responseUsersDelete);
+        return res.status(responseUsersDelete?.data?.status).json(responseUsersDelete);
     }
 }
 

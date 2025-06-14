@@ -23,7 +23,8 @@ interface IParamsUserService {
   region_code?: string,
   number_address?: string,
   typePerson?: TypePerson,
-  gender?: string; // é o genero ele pode mandar masculino, feminino ou prefiro não dizer
+  gender?: string;
+  isCreated?: boolean | null // é o genero ele pode mandar masculino, feminino ou prefiro não dizer
 }
 
 export const validationsUserService = ({
@@ -35,17 +36,22 @@ export const validationsUserService = ({
   birthDate,
   gender,
   typePerson,
-  password
+  password,
+  isCreated = false
+  
 }: IParamsUserService) => {
 
-  const validatorEmpty = validatorFieldsEmpty(
-    name,
-    email,
-    cpfCnpj,
-    phone,
-    gender,
-    typePerson
-  );
+const fields: string[] = [
+  name, 
+  ...(isCreated ? [email] : []), 
+   ...(isCreated ? [cpfCnpj] : []), 
+    ...(isCreated ? [typePerson] : []), 
+   phone, 
+   gender 
+  ];
+
+
+  const validatorEmpty = validatorFieldsEmpty(...fields);
 
   if (validatorEmpty) {
     return {
@@ -59,7 +65,7 @@ export const validationsUserService = ({
   }
 
   
-  if (!validatorEmail(email)) {
+  if (email && !validatorEmail(email)) {
     return {
       data: {
         message: "Não foi possível realizar está ação, E-mail inválido.",
@@ -68,7 +74,7 @@ export const validationsUserService = ({
     };
   }
 
-  if(!isValidPhoneNumber(phone)){
+  if(phone && !isValidPhoneNumber(phone)){
     return {
       data: {
         message: "Não foi possível realizar está ação, Número de telefone inválido.",
@@ -117,7 +123,7 @@ export const validationsUserService = ({
      }
   }
 
-  if (typePerson !== TypePerson.Fisic && typePerson !== TypePerson.Juridic) {
+  if (typePerson && typePerson !== TypePerson.Fisic && typePerson !== TypePerson.Juridic) {
     return {
       data: {
         message:
@@ -127,7 +133,7 @@ export const validationsUserService = ({
     };
   }
 
-  if (typePerson === TypePerson.Fisic && !validatorCPF(cpfCnpj)) {
+  if (cpfCnpj && typePerson === TypePerson.Fisic && !validatorCPF(cpfCnpj)) {
     return {
       data: {
         message: "Não foi possível realizar está ação, CPF inválido. Deve conter 11 dígitos.",
@@ -136,7 +142,7 @@ export const validationsUserService = ({
     };
   }
 
-  if (typePerson === TypePerson.Juridic && !validatorCNPJ(cpfCnpj)) {
+  if (cpfCnpj && typePerson === TypePerson.Juridic && !validatorCNPJ(cpfCnpj)) {
     return {
       data: {
         message: "Não foi possível realizar está ação, CNPJ inválido. Deve conter 14 dígitos.",

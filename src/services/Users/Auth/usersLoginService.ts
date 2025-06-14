@@ -79,6 +79,7 @@ class UsersLoginService {
     return {
       data: {
         message: `Bem Vindo ${users.name.split(" ")[0].charAt(0).toUpperCase()}${users.name.split(" ")[0].slice(1).toLocaleLowerCase()}`,
+        userId: users.id,
         token: token,
         status: 200
       }

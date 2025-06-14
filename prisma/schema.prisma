@@ -12,10 +12,12 @@ datasource db {
 model Users {
   id              String  @id @default(uuid())
   idPlan          String?
+  idProduct       String? @unique
+  idProductSubscribe String?
   idProfileAvatar String?
   name            String
   companyName     String? 
-  email           String
+  email           String?
   password        String
   cpfCnpj         String
   typePerson      String  @default("PF") // Pode ser "PF" ou "PJ"
@@ -56,13 +58,15 @@ model Users {
 
   created_At   DateTime  @default(now())
   updated_At   DateTime?
+  
   // Relacionamento com planos cadastrados
-  plansCreated Plan[]    @relation("idUserOwnerPlan")
+  plansCreated Plan[] @relation("idUserOwnerPlan")
+  planSubscription Plan? @relation("SubscribedPlans", fields: [idPlan], references: [id])
 
-  // Relacionamento com planos adquiridos
-  planSubscription Plan? @relation(fields: [idPlan], references: [id])
+  products  Products[]  
+  productSubscription ProductSubscription[] @relation("UserProductSubscription")
 
-  products      Products[]
+  
   typesProducts TypesProducts[]
   purchases     Purchases[]
   events        Events[]
@@ -81,6 +85,60 @@ model Users {
   @@map("users")
 }
 
+model Products {
+  id            String @id @default(uuid())
+  idCategory    String
+  idTypeProduct String
+  idUserOwner   String
+  idPlan        String? // <- Adicionado se quiser que produtos pertençam a planos
+
+  name        String
+  description String
+  labelPrice String
+  price      Float
+
+  expirationDate String?
+  dateRegistered String
+
+  positionOrder Int?
+
+  available      Boolean  @default(true)
+  allowAddCoupon Boolean? @default(false)
+  status         Boolean? @default(true)
+
+  created_At DateTime? @default(now())
+  updated_At DateTime?
+
+  userOwner     Users?        @relation(fields: [idUserOwner], references: [id])
+
+  typesProducts TypesProducts @relation(fields: [idTypeProduct], references: [id])
+  plan          Plan?         @relation("ProductsInPlan", fields: [idPlan], references: [id])
+
+  events        Events[]
+  purchases     Purchases[]
+  Coupon        Coupon[]
+  productSubscriptions ProductSubscription[] 
+
+  @@map("products")
+}
+
+
+model ProductSubscription {
+   id            String   @id @default(uuid())
+   idUserOwner   String
+   idProduct     String
+   startDate     DateTime
+   endDate       DateTime
+   active        Boolean @default(true)
+   created_At    DateTime @default(now())
+   updated_At    DateTime?
+
+   userOwner     Users    @relation("UserProductSubscription", fields: [idUserOwner], references: [id])
+   product       Products @relation(fields: [idProduct], references: [id])
+
+   @@map("product_subscription")
+}
+
 model Plan {
   id              String  @id @default(uuid())
   idUserOwnerPlan String
@@ -95,12 +153,13 @@ model Plan {
   status     Boolean     @default(true)
   created_At DateTime    @default(now())
   updated_At DateTime?
-  // Quem cadastrou o plano (o dono)
-  pwner      Users       @relation("idUserOwnerPlan", fields: [idUserOwnerPlan], references: [id])
+
+  owner      Users       @relation("idUserOwnerPlan", fields: [idUserOwnerPlan], references: [id])
   purchases  Purchases[]
 
-  // Quem já adquiriu o plano (usuários assinantes)
-  usersWhoSubscribed Users[]
+  usersWhoSubscribed Users[] @relation("SubscribedPlans")
+
+  products Products[] @relation("ProductsInPlan")
   coupon             Coupon[]
 
   @@map("plans")
@@ -160,41 +219,6 @@ model TypesCommercials {
   @@map("typesCommercials")
 }
 
-model Products {
-  id            String @id @default(uuid())
-  idCategory    String
-  idTypeProduct String
-  idUserOwner   String
-
-  name        String
-
-  description String
-
-  labelPrice String // é a label que pode ir ao lado do preço se é a entrada,inteira,meia,promoção.
-  price      Float
-
-  expirationDate String?
-  dateRegistered String
-
-  positionOrder Int?
-
-  available      Boolean  @default(true)
-  allowAddCoupon Boolean? @default(false)
-
-  status     Boolean?  @default(true)
-
-  
-  created_At DateTime? @default(now())
-  updated_At DateTime?
-
-  events        Events[]
-  purchases     Purchases[]
-  Coupon        Coupon[]
-  userOwner     Users?        @relation(fields: [idUserOwner], references: [id])
-  typesProducts TypesProducts @relation(fields: [idTypeProduct], references: [id])
-
-  @@map("products")
-}
 
 model TypesProducts {
   id          String @id @default(uuid())
@@ -229,8 +253,8 @@ model Events {
   dateEvent            String
   hourEvent            String
   placesPurchaseTicket Json? //locais para comprar ingressos
-  restrictionsEvent    Json? // restrições do evento
-  phoneForContact      String? // global
+  restrictionsEvent    Json? //restrições do evento
+  phoneForContact      String? //global
   status               Boolean @default(true)
 
   products   Products   @relation(fields: [idProduct], references: [id])
@@ -249,6 +273,8 @@ model Coupon {
   idPromoter         String?
   idProduct          String?
   idPlan             String?
+  isMultipleProducts Boolean? @default(false) 
+  products           Json?  
   codeCoupon         String
   cpfForUseUnique    String?
   priceDiscount      Float?

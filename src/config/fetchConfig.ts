@@ -4,8 +4,8 @@ interface IAPI {
     baseURL?: string, 
     data?: string 
     method: string, 
-    endpoint: string, 
-    authorization: string
+    endpoint?: string | null, 
+    authorization?: string | null
 }
 
 export const api = async ({baseURL, method, endpoint,data}: IAPI) => {

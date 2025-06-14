@@ -3,18 +3,18 @@ import prismaClient from "../../prisma";
 import { formatterDateToIso } from "../../utils/formatters/formatterDate";
 import { validatorPermissions } from "../../utils/validators/validatorPermissions";
 
-interface IGetDetailsVoucher {
+interface IGetDetailsPurchases {
   idUserLogged: string;
   id: string;
   idOtherUser?: string | null; // Novo campo opcional
 }
 
-class GetDetailsVoucherService {
+class GetDetailsPurchasesService {
   async execute({
     id,
     idUserLogged,
     idOtherUser,
-  }: IGetDetailsVoucher) {
+  }: IGetDetailsPurchases) {
     if (!id) {
       return {
         data: {
@@ -136,4 +136,4 @@ class GetDetailsVoucherService {
   }
 }
 
-export { GetDetailsVoucherService };
+export { GetDetailsPurchasesService };

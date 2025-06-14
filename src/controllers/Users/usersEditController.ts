@@ -62,7 +62,7 @@ class UsersEditController {
             
         })
 
-        res.status(responseEdit?.data?.status).json(responseEdit?.data?.message)
+        res.status(responseEdit?.data?.status).json(responseEdit?.data)
     }
 
 }

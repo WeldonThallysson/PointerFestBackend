@@ -93,6 +93,7 @@ class UsersRegisterOtherService {
       gender,
       typePerson,
       password: password ? password : null,
+      isCreated: true
     });
 
     if (verifyValidations) {

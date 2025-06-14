@@ -8,14 +8,14 @@ import { formatterCPF } from "../../utils/formatters/formatterCPF";
 import { formatterDateToString } from "../../utils/formatters/formatterDate";
 import { TypePerson } from "../../keys/typePerson/typePerson";
 
-interface IGetDispatchVouchersForEmails {
+interface IGetDispatchPurchasesForEmails {
   idUserLogged?: string | null;
   idVoucher?: string | null;
   idOtherUser?: string | null
 }
 
-class GetDispatchVouchersForEmailsService {
-  async execute({ idUserLogged, idVoucher,idOtherUser }: IGetDispatchVouchersForEmails) {
+class GetDispatchPurchasesForEmailsService {
+  async execute({ idUserLogged, idVoucher,idOtherUser }: IGetDispatchPurchasesForEmails) {
     if (!idVoucher || !idUserLogged) {
       return {
         data: {
@@ -141,4 +141,4 @@ class GetDispatchVouchersForEmailsService {
   }
 }
 
-export { GetDispatchVouchersForEmailsService };
+export { GetDispatchPurchasesForEmailsService };

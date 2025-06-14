@@ -49,6 +49,7 @@ class UsersRegisterService {
       gender,
       typePerson,
       password: password ? password : null,
+      isCreated: true
     });
     
     if(verifyValidations){
