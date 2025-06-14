@@ -57,26 +57,23 @@ class CheckoutPaymentMethodService {
     
       const [userLogged, methodPayment] = await Promise.all([
         findOrFail(
-          prismaClient.user.findFirst({
+          prismaClient.users.findFirst({
             where: { id: id_user_logged },
             select: {
               id: true,
               name: true,
               email: true,
           
-              cpf: true,
+              cpfCnpj: true,
               birthDate: true,
               gender: true,
               phone: true,
-              address: true,
               city: true,
               neighborhood: true,
-              residence: true,
               cep: true,
               number_address: true,
               region_code: true,
               status: true,
-              termsUsePark:true,
               termsPrivacyPolicy: true,
               termsUseLGPD: true,
               termsUsePlatform: true

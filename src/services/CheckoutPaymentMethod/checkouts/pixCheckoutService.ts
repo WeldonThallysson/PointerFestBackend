@@ -2,7 +2,7 @@ import axios from "axios";
 import { Request, response, Response } from "express";
 import { IMethodPaymentService, IProduct } from "../../../interface/interface.checkoutPaymentMethod";
 import { v4 as uuidv4 } from 'uuid';
-import { api } from "../../../constants/configs/fetchConfig";
+import { api } from "../../../config/fetchConfig";
 import { formatterTotalSomePrice } from "../../../utils/formatters/formatterTotalPrice";
 import { separatePhoneNumber } from "../../../utils/formatters/formatterPhone"; // Importar a função
 

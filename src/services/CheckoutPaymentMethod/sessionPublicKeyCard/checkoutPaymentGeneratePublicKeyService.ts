@@ -1,5 +1,4 @@
-import {api} from '../../../constants/configs/fetchConfig'
-
+import { api } from "../../../config/fetchConfig"; 
 
 
 class CheckoutPaymentGeneratePublicKeyService {

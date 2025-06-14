@@ -5,7 +5,7 @@ import {
   IProduct,
 } from "../../../interface/interface.checkoutPaymentMethod";
 import { v4 as uuidv4 } from "uuid";
-import { api } from "../../../constants/configs/fetchConfig";
+import { api } from "../../../config/fetchConfig"; 
 import {
   formatterTotalPrice,
   formatterTotalSomePrice,
